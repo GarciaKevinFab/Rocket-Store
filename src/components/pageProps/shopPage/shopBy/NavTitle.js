@@ -3,17 +3,9 @@ import { BiCaretDown } from "react-icons/bi";
 
 const NavTitle = ({ title, icons }) => {
   return (
-    <div className="flex items-center justify-between pb-5">
-      {icons ? (
-        <>
-          <h3 className="font-bold lg:text-xl text-primeColor">{title}</h3>
-          {icons && <BiCaretDown />}
-        </>
-      ) : (
-        <>
-          <h3 className="font-bold lg:text-xl text-primeColor">{title}</h3>
-        </>
-      )}
+    <div className="flex items-center justify-between pb-4">
+      <h3 className="font-bold text-sm lg:text-base text-primeColor uppercase tracking-wide">{title}</h3>
+      {icons && <BiCaretDown className="text-gray-400" />}
     </div>
   );
 };

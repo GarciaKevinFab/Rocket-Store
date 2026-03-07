@@ -42,61 +42,61 @@ const SignIn = () => {
   return (
     <div className="w-full h-screen flex items-center justify-center">
       <div className="w-1/2 hidden lgl:inline-flex h-full text-white">
-        <div className="w-[450px] h-full bg-primeColor px-10 flex flex-col gap-6 justify-center">
+        <div className="w-[450px] h-full bg-gradient-to-b from-primeColor to-gray-800 px-10 flex flex-col gap-6 justify-center">
           <Link to="/"><img src={logo} alt="logoImg" className="w-28" /></Link>
           <div className="flex flex-col gap-1 -mt-1">
-            <h1 className="font-titleFont text-xl font-medium">Mantente registrado para mas</h1>
-            <p className="text-base">Cuando inicias sesion, estas con nosotros!</p>
+            <h1 className="font-titleFont text-xl font-medium">Bienvenido de vuelta</h1>
+            <p className="text-sm text-gray-300">Inicia sesion para acceder a tu cuenta</p>
           </div>
           <div className="w-[300px] flex items-start gap-3">
-            <span className="text-green-500 mt-1"><BsCheckCircleFill /></span>
-            <p className="text-base text-gray-300">
-              <span className="text-white font-semibold font-titleFont">Comienza rapido con RUME IMPORT</span><br />
-              Registro facil, simple con pasos sencillos. Empieza a comprar ahora.
+            <span className="text-green-400 mt-1"><BsCheckCircleFill /></span>
+            <p className="text-sm text-gray-300 leading-relaxed">
+              <span className="text-white font-semibold font-titleFont">Compra rapido con RUME IMPORT</span><br />
+              Acceso directo a tu carrito y pedidos guardados.
             </p>
           </div>
           <div className="w-[300px] flex items-start gap-3">
-            <span className="text-green-500 mt-1"><BsCheckCircleFill /></span>
-            <p className="text-base text-gray-300">
-              <span className="text-white font-semibold font-titleFont">Accede a todos los servicios de RUME IMPORT</span><br />
-              Descuentos exclusivos para miembros, productos importados, ofertas unicas.
+            <span className="text-green-400 mt-1"><BsCheckCircleFill /></span>
+            <p className="text-sm text-gray-300 leading-relaxed">
+              <span className="text-white font-semibold font-titleFont">Ofertas exclusivas para miembros</span><br />
+              Descuentos especiales y acceso anticipado a nuevos productos.
             </p>
           </div>
           <div className="w-[300px] flex items-start gap-3">
-            <span className="text-green-500 mt-1"><BsCheckCircleFill /></span>
-            <p className="text-base text-gray-300">
-              <span className="text-white font-semibold font-titleFont">Nuestros clientes confian en nosotros</span><br />
-              Productos 100% originales. Gracias por tu preferencia.
+            <span className="text-green-400 mt-1"><BsCheckCircleFill /></span>
+            <p className="text-sm text-gray-300 leading-relaxed">
+              <span className="text-white font-semibold font-titleFont">Productos 100% originales</span><br />
+              Garantia de autenticidad en todos nuestros productos.
             </p>
           </div>
-          <div className="flex items-center justify-between mt-10">
-            <Link to="/"><p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300">&copy; RUME IMPORT</p></Link>
-            <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300">Terminos</p>
-            <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300">Privacidad</p>
-            <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300">Seguridad</p>
+          <div className="flex items-center gap-6 mt-10">
+            <Link to="/"><p className="text-xs font-titleFont text-gray-400 hover:text-white cursor-pointer duration-300">&copy; RUME IMPORT</p></Link>
+            <p className="text-xs font-titleFont text-gray-400 hover:text-white cursor-pointer duration-300">Terminos</p>
+            <p className="text-xs font-titleFont text-gray-400 hover:text-white cursor-pointer duration-300">Privacidad</p>
           </div>
         </div>
       </div>
-      <div className="w-full lgl:w-1/2 h-full flex items-center justify-center px-4">
-        <form onSubmit={handleSignIn} className="w-full max-w-[450px] flex flex-col justify-center">
-          <h1 className="font-titleFont underline underline-offset-4 decoration-[1px] font-semibold text-3xl mdl:text-4xl mb-4">Iniciar sesion</h1>
-          <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-.5">
-              <p className="font-titleFont text-base font-semibold text-gray-600">Correo Electronico</p>
-              <input onChange={handleEmail} value={email} className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none" type="email" placeholder="ejemplo@correo.com" />
-              {errEmail && <p className="text-sm text-red-500 font-titleFont font-semibold px-4"><span className="font-bold italic mr-1">!</span>{errEmail}</p>}
+      <div className="w-full lgl:w-1/2 h-full flex items-center justify-center px-6">
+        <form onSubmit={handleSignIn} className="w-full max-w-[420px] flex flex-col justify-center">
+          <h1 className="font-titleFont font-bold text-2xl md:text-3xl mb-2 text-primeColor">Iniciar sesion</h1>
+          <p className="text-sm text-gray-400 mb-6">Ingresa tus datos para continuar</p>
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-1.5">
+              <label className="font-titleFont text-sm font-semibold text-gray-600">Correo Electronico</label>
+              <input onChange={handleEmail} value={email} className="w-full h-11 placeholder:text-sm px-4 text-sm font-medium rounded-lg border border-gray-200 outline-none focus:border-primeColor duration-200 bg-gray-50" type="email" placeholder="ejemplo@correo.com" />
+              {errEmail && <p className="text-xs text-red-500 font-medium mt-0.5">{errEmail}</p>}
             </div>
-            <div className="flex flex-col gap-.5">
-              <p className="font-titleFont text-base font-semibold text-gray-600">Contrasena</p>
-              <input onChange={handlePassword} value={password} className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none" type="password" placeholder="Tu contrasena" />
-              {errPassword && <p className="text-sm text-red-500 font-titleFont font-semibold px-4"><span className="font-bold italic mr-1">!</span>{errPassword}</p>}
+            <div className="flex flex-col gap-1.5">
+              <label className="font-titleFont text-sm font-semibold text-gray-600">Contrasena</label>
+              <input onChange={handlePassword} value={password} className="w-full h-11 placeholder:text-sm px-4 text-sm font-medium rounded-lg border border-gray-200 outline-none focus:border-primeColor duration-200 bg-gray-50" type="password" placeholder="Tu contrasena" />
+              {errPassword && <p className="text-xs text-red-500 font-medium mt-0.5">{errPassword}</p>}
             </div>
-            <button type="submit" disabled={loading} className="bg-primeColor hover:bg-black text-gray-200 hover:text-white cursor-pointer w-full text-base font-medium h-10 rounded-md duration-300 disabled:opacity-50">
+            <button type="submit" disabled={loading} className="bg-primeColor hover:bg-black text-white cursor-pointer w-full text-sm font-semibold h-11 rounded-lg duration-300 disabled:opacity-50 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 mt-2">
               {loading ? "Ingresando..." : "Iniciar Sesion"}
             </button>
-            <p className="text-sm text-center font-titleFont font-medium">
+            <p className="text-sm text-center text-gray-500 mt-2">
               No tienes una cuenta?{" "}
-              <Link to="/signup"><span className="hover:text-blue-600 duration-300">Registrate</span></Link>
+              <Link to="/signup"><span className="text-primeColor font-semibold hover:underline duration-300">Registrate</span></Link>
             </p>
           </div>
         </form>

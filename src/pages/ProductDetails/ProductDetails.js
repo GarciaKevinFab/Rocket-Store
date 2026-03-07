@@ -15,7 +15,6 @@ const ProductDetails = () => {
     if (location.state?.item) {
       setProductInfo(location.state.item);
     } else {
-      // Fallback: find product by ID from constants
       const found = paginationItems.find(
         (item) => String(item._id) === String(_id)
       );
@@ -29,29 +28,30 @@ const ProductDetails = () => {
   if (!productInfo) {
     return (
       <div className="max-w-container mx-auto px-4 py-20 text-center">
-        <p className="text-gray-500">Cargando producto...</p>
+        <div className="w-12 h-12 border-4 border-gray-200 border-t-primeColor rounded-full animate-spin mx-auto mb-4"></div>
+        <p className="text-gray-500 font-titleFont">Cargando producto...</p>
       </div>
     );
   }
 
   return (
-    <div className="w-full mx-auto border-b-[1px] border-b-gray-300">
+    <div className="w-full mx-auto border-b border-gray-100">
       <div className="max-w-container mx-auto px-4">
         <div className="xl:-mt-10 -mt-7">
           <Breadcrumbs title="" prevLocation={prevLocation} />
         </div>
-        <div className="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-6 gap-4 h-full -mt-5 xl:-mt-8 pb-10 bg-gray-100 p-4">
-          <div className="h-full">
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-6 gap-6 h-full -mt-5 xl:-mt-8 pb-10 bg-gray-50/50 rounded-2xl p-4 md:p-6">
+          <div className="h-full hidden xl:block">
             <ProductsOnSale />
           </div>
-          <div className="h-full xl:col-span-2">
+          <div className="h-full xl:col-span-2 rounded-xl overflow-hidden bg-white shadow-sm">
             <img
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover hover:scale-105 duration-500"
               src={productInfo.img}
               alt={productInfo.productName}
             />
           </div>
-          <div className="h-full w-full md:col-span-2 xl:col-span-3 xl:p-14 flex flex-col gap-6 justify-center">
+          <div className="h-full w-full md:col-span-2 xl:col-span-3 xl:p-10 flex flex-col gap-6 justify-center">
             <ProductInfo productInfo={productInfo} />
           </div>
         </div>
