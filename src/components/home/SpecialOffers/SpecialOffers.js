@@ -14,40 +14,40 @@ const SpecialOffers = () => {
       <Heading heading="Oferta Especial" />
       <div className="w-full grid grid-cols-1 md:grid-cols-2 lgl:grid-cols-3 xl:grid-cols-4 gap-10">
         <Product
-          _id="1101"
+          _id="1001"
           img={spfOne}
-          productName="Gorra para Niños"
-          price="35.00"
-          color="Blanco y negro"
+          productName="Perfume Invictus Paco Rabanne"
+          price="189.00"
+          color="Dorado"
           badge={true}
-          des="Una gorra con mucho estilo que te cubre del sol y te da mucho estilo."
+          des="Fragancia masculina iconica con notas de pomelo, madera de guayaco y ambar gris. Ideal para el hombre moderno."
         />
         <Product
-          _id="1102"
+          _id="1002"
           img={spfTwo}
-          productName="Mesa de Té"
-          price="180.00"
-          color="Madera"
-          badge={true}
-          des="Excelente para esas tardes de relajación con un té que renueva el alma."
-        />
-        <Product
-          _id="1103"
-          img={spfThree}
-          productName="Auriculares"
-          price="25.00"
-          color="Guinda"
-          badge={true}
-          des="Tipo vincha con sonido envolvente y muy cómodos para disfrutar tus caciones favoritas durante muchas horas."
-        />
-        <Product
-          _id="1104"
-          img={spfFour}
-          productName="Gafas de sol"
-          price="220.00"
+          productName="iPhone 15 128GB"
+          price="4299.00"
           color="Negro"
           badge={true}
-          des="Proteje tus ojos con la nueva tecnologia semiastroautica-espacial, que bloquea los rayos gamma que emiten los púlsares."
+          des="Chip A16 Bionic, pantalla Super Retina XDR de 6.1 pulgadas, Dynamic Island y camara dual de 48MP."
+        />
+        <Product
+          _id="1003"
+          img={spfThree}
+          productName="AirPods Pro 2da Generacion"
+          price="899.00"
+          color="Blanco"
+          badge={true}
+          des="Cancelacion activa de ruido adaptativa, audio espacial personalizado y hasta 6 horas de reproduccion."
+        />
+        <Product
+          _id="1004"
+          img={spfFour}
+          productName="Perfume Sauvage Dior EDT"
+          price="320.00"
+          color="Azul"
+          badge={true}
+          des="Fragancia masculina fresca y salvaje con notas de bergamota y ambroxan. Un clasico contemporaneo de Dior."
         />
       </div>
     </div>

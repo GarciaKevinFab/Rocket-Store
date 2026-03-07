@@ -18,9 +18,19 @@ import Cart from "./pages/Cart/Cart";
 import Contacto from "./pages/Contacto/Contacto";
 import Home from "./pages/Home/Home";
 import Offer from "./pages/Offer/Offer";
-import Payment from "./pages/payment/Payment";
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import Tienda from "./pages/Tienda/Tienda";
+import Checkout from "./pages/Checkout/Checkout";
+import MisPedidos from "./pages/Account/MisPedidos";
+import Perfil from "./pages/Account/Perfil";
+import AdminLayout from "./pages/Admin/AdminLayout";
+import AdminDashboard from "./pages/Admin/AdminDashboard";
+import AdminProducts from "./pages/Admin/AdminProducts";
+import AdminProductForm from "./pages/Admin/AdminProductForm";
+import AdminOrders from "./pages/Admin/AdminOrders";
+import AdminOrderDetail from "./pages/Admin/AdminOrderDetail";
+import ProtectedRoute from "./components/ProtectedRoute";
+import AdminRoute from "./components/AdminRoute";
 
 const Layout = () => {
   return (
@@ -35,23 +45,60 @@ const Layout = () => {
     </div>
   );
 };
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
       <Route path="/" element={<Layout />}>
-        {/* ==================== Header Navlink Start here =================== */}
-        <Route index element={<Home />}></Route>
-        <Route path="/tienda" element={<Tienda />}></Route>
-        <Route path="/nosotros" element={<Nosotros />}></Route>
-        <Route path="/contacto" element={<Contacto />}></Route>
-        {/* ==================== Header Navlink End here ===================== */}
-        <Route path="/offer" element={<Offer />}></Route>
-        <Route path="/product/:_id" element={<ProductDetails />}></Route>
-        <Route path="/cart" element={<Cart />}></Route>
-        <Route path="/paymentgateway" element={<Payment />}></Route>
+        <Route index element={<Home />} />
+        <Route path="/tienda" element={<Tienda />} />
+        <Route path="/nosotros" element={<Nosotros />} />
+        <Route path="/contacto" element={<Contacto />} />
+        <Route path="/offer" element={<Offer />} />
+        <Route path="/product/:_id" element={<ProductDetails />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route
+          path="/checkout"
+          element={
+            <ProtectedRoute>
+              <Checkout />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/mis-pedidos"
+          element={
+            <ProtectedRoute>
+              <MisPedidos />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/perfil"
+          element={
+            <ProtectedRoute>
+              <Perfil />
+            </ProtectedRoute>
+          }
+        />
       </Route>
-      <Route path="/signup" element={<SignUp />}></Route>
-      <Route path="/signin" element={<SignIn />}></Route>
+      <Route path="/signup" element={<SignUp />} />
+      <Route path="/signin" element={<SignIn />} />
+      <Route
+        path="/admin"
+        element={
+          <AdminRoute>
+            <AdminLayout />
+          </AdminRoute>
+        }
+      >
+        <Route index element={<AdminDashboard />} />
+        <Route path="productos" element={<AdminProducts />} />
+        <Route path="productos/nuevo" element={<AdminProductForm />} />
+        <Route path="productos/editar/:id" element={<AdminProductForm />} />
+        <Route path="pedidos" element={<AdminOrders />} />
+        <Route path="pedidos/:id" element={<AdminOrderDetail />} />
+      </Route>
     </Route>
   )
 );

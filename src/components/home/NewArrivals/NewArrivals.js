@@ -52,57 +52,57 @@ const NewArrivals = () => {
       <Slider {...settings}>
         <div className="px-2">
           <Product
-            _id="100001"
+            _id="1009"
             img={newArrOne}
-            productName="Reloj de Mesa Redondo"
-            price="44.00"
-            color="Black"
+            productName="Apple Watch Series 9 GPS"
+            price="1899.00"
+            color="Negro"
             badge={true}
-            des="Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis."
+            des="Chip S9, pantalla Retina siempre activa, sensor de oxigeno en sangre y ECG. Resistente al agua hasta 50 metros."
           />
         </div>
         <div className="px-2">
           <Product
-            _id="100002"
+            _id="1010"
             img={newArrTwo}
-            productName="Smart Watch"
-            price="250.00"
-            color="Black"
+            productName="Samsung Galaxy S24 Ultra"
+            price="5199.00"
+            color="Negro"
             badge={true}
-            des="Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis."
+            des="Pantalla Dynamic AMOLED 2X de 6.8 pulgadas, camara de 200MP, S Pen integrado y procesador Snapdragon 8 Gen 3."
           />
         </div>
         <div className="px-2">
           <Product
-            _id="100003"
+            _id="1011"
             img={newArrThree}
-            productName="Canasta de Ropa"
-            price="80.00"
-            color="Mixed"
+            productName="Set de Cuidado Facial Completo"
+            price="120.00"
+            color="Variado"
             badge={true}
-            des="Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis."
+            des="Kit completo con limpiador facial, tonico, serum de vitamina C y crema hidratante. Rutina de cuidado para piel radiante."
           />
         </div>
         <div className="px-2">
           <Product
-            _id="100004"
+            _id="1012"
             img={newArrFour}
-            productName="Juguetes Divertidos para Bebés"
-            price="60.00"
-            color="Mixed"
+            productName="iPhone 15 Pro Max 256GB"
+            price="5999.00"
+            color="Titanio Natural"
             badge={false}
-            des="Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis."
+            des="El iPhone mas potente con chip A17 Pro, camara de 48MP, pantalla Super Retina XDR de 6.7 pulgadas y cuerpo de titanio."
           />
         </div>
         <div className="px-2">
           <Product
-            _id="100005"
+            _id="1014"
             img={newArrTwo}
-            productName="Juguetes Divertidos para Bebés"
-            price="60.00"
-            color="Mixed"
-            badge={false}
-            des="Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis."
+            productName="Samsung Galaxy A55 5G"
+            price="1599.00"
+            color="Azul"
+            badge={true}
+            des="Pantalla Super AMOLED de 6.6 pulgadas, triple camara de 50MP, bateria de 5000mAh y conectividad 5G."
           />
         </div>
       </Slider>

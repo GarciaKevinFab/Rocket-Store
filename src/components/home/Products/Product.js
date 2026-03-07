@@ -11,16 +11,10 @@ import { addToCart } from "../../../redux/orebiSlice";
 
 const Product = (props) => {
   const dispatch = useDispatch();
-  const _id = props.productName;
-  const idString = (_id) => {
-    return String(_id).toLowerCase().split(" ").join("");
-  };
-  const rootId = idString(_id);
-
   const navigate = useNavigate();
   const productItem = props;
   const handleProductDetails = () => {
-    navigate(`/product/${rootId}`, {
+    navigate(`/product/${props._id}`, {
       state: {
         item: productItem,
       },

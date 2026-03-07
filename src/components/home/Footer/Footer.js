@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { FaFacebook, FaYoutube, FaLinkedin, FaGithub } from "react-icons/fa";
+import { FaFacebook, FaGithub } from "react-icons/fa";
 import FooterListTitle from "./FooterListTitle";
-import Image from "../../designLayouts/Image";
 
 const Footer = () => {
   const [emailInfo, setEmailInfo] = useState("");
@@ -33,7 +32,7 @@ const Footer = () => {
           <FooterListTitle title=" Más sobre ROCKET" />
           <div className="flex flex-col gap-6">
             <p className="text-base w-full xl:w-[80%]">
-            Descubre la variedad de productos y servicios que Rocket ofrece. Desde accesorios modernos hasta innovaciones electrónicas, somos tu destino de compras preferido.
+            Tu tienda online de perfumes originales, smartphones y accesorios tech en Peru. Envios a todo el pais con Yape, Plin y transferencia bancaria.
             </p>
             <ul className="flex items-center gap-2">
               <a
@@ -61,19 +60,19 @@ const Footer = () => {
           <FooterListTitle title="Tienda" />
           <ul className="flex flex-col gap-2">
             <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Accesorios
+              Perfumes
             </li>
             <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Ropa
+              Smartphones
             </li>
             <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Electrónicos
+              Accesorios Tech
             </li>
             <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Electrodomésticos
+              Relojes
             </li>
             <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Nuevas Llegadas
+              Cuidado Personal
             </li>
           </ul>
         </div>
@@ -137,12 +136,6 @@ const Footer = () => {
               </div>
             )}
 
-            <Image
-              className={`w-[80%] lg:w-[60%] mx-auto ${
-                subscription ? "mt-2" : "mt-6"
-              }`}
-              
-            />
           </div>
         </div>
       </div>

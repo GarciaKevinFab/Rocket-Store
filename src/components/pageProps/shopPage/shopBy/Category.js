@@ -8,24 +8,28 @@ const Category = () => {
   const items = [
     {
       _id: 990,
-      title: "Nuevas Llegadas",
+      title: "Perfumes",
       icons: true,
     },
     {
       _id: 991,
-      title: "Gadgets",
+      title: "Smartphones",
     },
     {
       _id: 992,
-      title: "Accesorios",
+      title: "Accesorios Tech",
       icons: true,
     },
     {
       _id: 993,
-      title: "Electrónicos",
+      title: "Relojes",
     },
     {
       _id: 994,
+      title: "Cuidado Personal",
+    },
+    {
+      _id: 995,
       title: "Otros",
     },
   ];

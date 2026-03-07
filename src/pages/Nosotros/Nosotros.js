@@ -6,7 +6,9 @@ const Nosotros = () => {
   const location = useLocation();
   const [prevLocation, setPrevLocation] = useState("");
   useEffect(() => {
-    setPrevLocation(location.state.data);
+    if (location.state?.data) {
+      setPrevLocation(location.state.data);
+    }
   }, [location]);
   return (
     <div className="max-w-container mx-auto px-4">
@@ -14,9 +16,9 @@ const Nosotros = () => {
       <div className="pb-10">
         <h1 className="max-w-[600px] text-base text-lightText mb-2">
           <span className="text-primeColor font-semibold text-lg">ROCKET</span>{" "}
-          Es una de las principales marcas de comercio electrónico del mundo y es reconocida a nivel internacional por celebrar la esencia del estilo clásico de aspecto fresco en todo el mundo
+          es tu tienda online de confianza en Peru. Perfumes originales, smartphones de ultima generacion, accesorios tech y mucho mas. Ofrecemos productos autenticos con envio a todo el pais y los mejores metodos de pago: Yape, Plin y transferencia bancaria.
         </h1>
-        <Link to="/shop">
+        <Link to="/tienda">
           <button className="w-52 h-10 bg-primeColor text-white hover:bg-black duration-300">
             Continuar comprando
           </button>
