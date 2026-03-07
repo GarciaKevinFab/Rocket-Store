@@ -10,17 +10,14 @@ const Breadcrumbs = ({ prevLocation, title }) => {
   }, [location]);
 
   return (
-    <div className="w-full py-10 xl:py-10 flex flex-col gap-3">
-      <h1 className="text-5xl text-primeColor font-titleFont font-bold">
+    <div className="w-full py-8 xl:py-10 flex flex-col gap-2">
+      <h1 className="text-3xl md:text-4xl text-primeColor font-titleFont font-bold">
         {title}
       </h1>
-      <p className="text-sm font-normal text-lightText capitalize flex items-center">
-        <span> {prevLocation === "" ? "Inicio" : prevLocation}</span>
-
-        <span className="px-1">
-          <HiOutlineChevronRight />
-        </span>
-        <span className="capitalize font-semibold text-primeColor">
+      <p className="text-sm font-normal text-gray-400 capitalize flex items-center gap-1">
+        <span>{prevLocation === "" ? "Inicio" : prevLocation}</span>
+        <HiOutlineChevronRight className="text-xs" />
+        <span className="capitalize font-medium text-primeColor">
           {locationPath}
         </span>
       </p>

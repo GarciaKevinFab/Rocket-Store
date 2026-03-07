@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FaInstagram } from "react-icons/fa";
 import { SiTiktok } from "react-icons/si";
+import { Link } from "react-router-dom";
 import FooterListTitle from "./FooterListTitle";
 
 const Footer = () => {
@@ -27,113 +28,83 @@ const Footer = () => {
     }
   };
   return (
-    <div className="w-full bg-[#F5F5F3] py-20">
-      <div className="max-w-container mx-auto grid grid-cols-1 md:grid-cols-2  xl:grid-cols-6 px-4 gap-10">
+    <div className="w-full bg-[#F5F5F3] py-16">
+      <div className="max-w-container mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-6 px-4 gap-10">
         <div className="col-span-2">
-          <FooterListTitle title=" Mas sobre RUME IMPORT" />
-          <div className="flex flex-col gap-6">
-            <p className="text-base w-full xl:w-[80%]">
-            Tu tienda online de perfumes originales, smartphones y accesorios tech en Peru. Envios a todo el pais con Yape, Plin y transferencia bancaria.
+          <FooterListTitle title="RUME IMPORT" />
+          <div className="flex flex-col gap-4">
+            <p className="text-sm text-gray-500 leading-relaxed w-full xl:w-[80%]">
+              Tu tienda online de perfumes originales, smartphones y accesorios tech en Peru. Envios a todo el pais con Yape, Plin y transferencia bancaria.
             </p>
-            <ul className="flex items-center gap-2">
-              <a
-                href="https://www.instagram.com/rume_import"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <li className="w-7 h-7 bg-primeColor text-gray-100 hover:text-white cursor-pointer text-lg rounded-full flex justify-center items-center hover:bg-black duration-300">
-                  <FaInstagram />
-                </li>
+            <div className="flex items-center gap-3">
+              <a href="https://www.instagram.com/rume_import" target="_blank" rel="noreferrer" className="w-9 h-9 bg-primeColor text-white rounded-lg flex items-center justify-center hover:bg-black duration-300 text-lg">
+                <FaInstagram />
               </a>
-              <a
-                href="https://www.tiktok.com/@rume_import_respa"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <li className="w-7 h-7 bg-primeColor text-gray-100 hover:text-white cursor-pointer text-lg rounded-full flex justify-center items-center hover:bg-black duration-300">
-                  <SiTiktok />
-                </li>
+              <a href="https://www.tiktok.com/@rume_import_respa" target="_blank" rel="noreferrer" className="w-9 h-9 bg-primeColor text-white rounded-lg flex items-center justify-center hover:bg-black duration-300 text-lg">
+                <SiTiktok />
               </a>
-            </ul>
+            </div>
           </div>
         </div>
         <div>
           <FooterListTitle title="Tienda" />
           <ul className="flex flex-col gap-2">
-            <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Perfumes
-            </li>
-            <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Smartphones
-            </li>
-            <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Accesorios Tech
-            </li>
-            <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Relojes
-            </li>
-            <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Cuidado Personal
-            </li>
+            {["Perfumes", "Smartphones", "Accesorios Tech", "Relojes", "Cuidado Personal"].map((item) => (
+              <li key={item} className="font-titleFont text-sm text-gray-500 hover:text-primeColor hover:translate-x-1 transition-all duration-200 cursor-pointer">
+                {item}
+              </li>
+            ))}
           </ul>
         </div>
         <div>
           <FooterListTitle title="Tu cuenta" />
           <ul className="flex flex-col gap-2">
-            <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Perfil
-            </li>
-            <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Pedidos
-            </li>
-            <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Rastrear Pedido
-            </li>
-            <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Opciones de pago
-            </li>
+            <Link to="/perfil"><li className="font-titleFont text-sm text-gray-500 hover:text-primeColor hover:translate-x-1 transition-all duration-200 cursor-pointer">Perfil</li></Link>
+            <Link to="/mis-pedidos"><li className="font-titleFont text-sm text-gray-500 hover:text-primeColor hover:translate-x-1 transition-all duration-200 cursor-pointer">Pedidos</li></Link>
+            <Link to="/rastrear-pedido"><li className="font-titleFont text-sm text-gray-500 hover:text-primeColor hover:translate-x-1 transition-all duration-200 cursor-pointer">Rastrear Pedido</li></Link>
+            <Link to="/nosotros"><li className="font-titleFont text-sm text-gray-500 hover:text-primeColor hover:translate-x-1 transition-all duration-200 cursor-pointer">Sobre Nosotros</li></Link>
+            <Link to="/contacto"><li className="font-titleFont text-sm text-gray-500 hover:text-primeColor hover:translate-x-1 transition-all duration-200 cursor-pointer">Contacto</li></Link>
           </ul>
         </div>
-        <div className="col-span-2 flex flex-col items-center w-full px-4">
-          <FooterListTitle title="Suscribete a nuestro boletin." />
+        <div className="col-span-2 flex flex-col items-center w-full px-0 xl:px-4">
+          <FooterListTitle title="Suscribete a nuestro boletin" />
           <div className="w-full">
-            <p className="text-center mb-4">
-            Mantente actualizado con las ultimas ofertas y productos. Unite a la comunidad RUME IMPORT y se el primero en conocer nuestros descuentos exclusivos!
+            <p className="text-center text-sm text-gray-500 mb-4">
+              Mantente actualizado con las ultimas ofertas y productos. Unite a la comunidad RUME IMPORT!
             </p>
             {subscription ? (
               <motion.p
                 initial={{ x: 20, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 0.5 }}
-                className="w-full text-center text-base font-titleFont font-semibold text-green-600"
+                className="w-full text-center text-sm font-titleFont font-semibold text-green-600"
               >
                 Suscripcion exitosa!
               </motion.p>
             ) : (
-              <div className="w-full flex-col xl:flex-row flex justify-between items-center gap-4">
-                <div className="flex flex-col w-full">
+              <div className="w-full flex flex-col sm:flex-row gap-3">
+                <div className="flex flex-col flex-1">
                   <input
                     onChange={(e) => setEmailInfo(e.target.value)}
                     value={emailInfo}
-                    className="w-full h-12 border-b border-gray-400 bg-transparent px-4 text-primeColor text-lg placeholder:text-base outline-none"
+                    className="w-full h-11 border border-gray-300 bg-white px-4 text-sm rounded-lg outline-none focus:border-primeColor duration-200"
                     type="text"
-                    placeholder="Correo electronico ...*"
+                    placeholder="Correo electronico..."
                   />
                   {errMsg && (
-                    <p className="text-red-600 text-sm font-semibold font-titleFont text-center animate-bounce mt-2">
+                    <p className="text-red-500 text-xs mt-1.5 text-center">
                       {errMsg}
                     </p>
                   )}
                 </div>
                 <button
                   onClick={handleSubscription}
-                  className="bg-white text-lightText w-full xl:w-[30%] h-10 hover:bg-black hover:text-white duration-300 text-base tracking-wide"
+                  className="h-11 px-6 bg-primeColor text-white text-sm font-medium rounded-lg hover:bg-black duration-300 whitespace-nowrap"
                 >
                   Suscribir
                 </button>
               </div>
             )}
-
           </div>
         </div>
       </div>

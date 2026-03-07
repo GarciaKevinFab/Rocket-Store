@@ -9,29 +9,21 @@ const SpecialCase = () => {
   const products = useSelector((state) => state.orebiReducer.products);
   const { currentUser } = useAuth();
   return (
-    <div className="fixed top-52 right-2 z-20 hidden md:flex flex-col gap-2">
+    <div className="fixed top-52 right-3 z-20 hidden md:flex flex-col gap-2">
       <Link to={currentUser ? "/perfil" : "/signin"}>
-        <div className="bg-white w-16 h-[70px] rounded-md flex flex-col gap-1 text-[#33475b] justify-center items-center shadow-testShadow overflow-x-hidden group cursor-pointer">
-          <div className="flex justify-center items-center">
-            <MdSwitchAccount className="text-2xl -translate-x-12 group-hover:translate-x-3 transition-transform duration-200" />
-
-            <MdSwitchAccount className="text-2xl -translate-x-3 group-hover:translate-x-12 transition-transform duration-200" />
-          </div>
-          <p className="text-xs font-semibold font-titleFont">Perfil</p>
+        <div className="bg-white w-14 h-14 rounded-xl flex flex-col gap-0.5 text-gray-500 justify-center items-center shadow-lg border border-gray-100 overflow-x-hidden group cursor-pointer hover:bg-primeColor hover:text-white hover:border-primeColor duration-300">
+          <MdSwitchAccount className="text-xl" />
+          <p className="text-[10px] font-semibold font-titleFont">Perfil</p>
         </div>
       </Link>
       <Link to="/cart">
-        <div className="bg-white w-16 h-[70px] rounded-md flex flex-col gap-1 text-[#33475b] justify-center items-center shadow-testShadow overflow-x-hidden group cursor-pointer relative">
-          <div className="flex justify-center items-center">
-            <RiShoppingCart2Fill className="text-2xl -translate-x-12 group-hover:translate-x-3 transition-transform duration-200" />
-
-            <RiShoppingCart2Fill className="text-2xl -translate-x-3 group-hover:translate-x-12 transition-transform duration-200" />
-          </div>
-          <p className="text-xs font-semibold font-titleFont">Comprar</p>
+        <div className="bg-white w-14 h-14 rounded-xl flex flex-col gap-0.5 text-gray-500 justify-center items-center shadow-lg border border-gray-100 overflow-x-hidden group cursor-pointer hover:bg-primeColor hover:text-white hover:border-primeColor duration-300 relative">
+          <RiShoppingCart2Fill className="text-xl" />
+          <p className="text-[10px] font-semibold font-titleFont">Carrito</p>
           {products.length > 0 && (
-            <p className="absolute top-1 right-2 bg-primeColor text-white text-xs w-4 h-4 rounded-full flex items-center justify-center font-semibold">
+            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold shadow-sm">
               {products.length}
-            </p>
+            </span>
           )}
         </div>
       </Link>
