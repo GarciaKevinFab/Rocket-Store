@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { FaFacebook, FaGithub } from "react-icons/fa";
+import { FaInstagram } from "react-icons/fa";
+import { SiTiktok } from "react-icons/si";
 import FooterListTitle from "./FooterListTitle";
 
 const Footer = () => {
@@ -16,9 +17,9 @@ const Footer = () => {
 
   const handleSubscription = () => {
     if (emailInfo === "") {
-      setErrMsg("¡Por favor, proporciona un correo electrónico!");
+      setErrMsg("Por favor, proporciona un correo electronico!");
     } else if (!emailValidation(emailInfo)) {
-      setErrMsg("¡Introduce un correo electrónico válido!");
+      setErrMsg("Introduce un correo electronico valido!");
     } else {
       setSubscription(true);
       setErrMsg("");
@@ -36,21 +37,21 @@ const Footer = () => {
             </p>
             <ul className="flex items-center gap-2">
               <a
-                href=""
+                href="https://www.instagram.com/rume_import"
                 target="_blank"
                 rel="noreferrer"
               >
                 <li className="w-7 h-7 bg-primeColor text-gray-100 hover:text-white cursor-pointer text-lg rounded-full flex justify-center items-center hover:bg-black duration-300">
-                  <FaGithub />
+                  <FaInstagram />
                 </li>
               </a>
               <a
-                href=""
+                href="https://www.tiktok.com/@rume_import_respa"
                 target="_blank"
                 rel="noreferrer"
               >
                 <li className="w-7 h-7 bg-primeColor text-gray-100 hover:text-white cursor-pointer text-lg rounded-full flex justify-center items-center hover:bg-black duration-300">
-                  <FaFacebook />
+                  <SiTiktok />
                 </li>
               </a>
             </ul>
@@ -86,10 +87,7 @@ const Footer = () => {
               Pedidos
             </li>
             <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Direcciones
-            </li>
-            <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
-              Detalles de la cuenta
+              Rastrear Pedido
             </li>
             <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
               Opciones de pago
@@ -97,7 +95,7 @@ const Footer = () => {
           </ul>
         </div>
         <div className="col-span-2 flex flex-col items-center w-full px-4">
-          <FooterListTitle title="Suscríbete a nuestro boletín." />
+          <FooterListTitle title="Suscribete a nuestro boletin." />
           <div className="w-full">
             <p className="text-center mb-4">
             Mantente actualizado con las ultimas ofertas y productos. Unite a la comunidad RUME IMPORT y se el primero en conocer nuestros descuentos exclusivos!
@@ -109,7 +107,7 @@ const Footer = () => {
                 transition={{ duration: 0.5 }}
                 className="w-full text-center text-base font-titleFont font-semibold text-green-600"
               >
-                ¡Suscripción exitosa!
+                Suscripcion exitosa!
               </motion.p>
             ) : (
               <div className="w-full flex-col xl:flex-row flex justify-between items-center gap-4">
@@ -119,7 +117,7 @@ const Footer = () => {
                     value={emailInfo}
                     className="w-full h-12 border-b border-gray-400 bg-transparent px-4 text-primeColor text-lg placeholder:text-base outline-none"
                     type="text"
-                    placeholder="Correo electrónico ...*"
+                    placeholder="Correo electronico ...*"
                   />
                   {errMsg && (
                     <p className="text-red-600 text-sm font-semibold font-titleFont text-center animate-bounce mt-2">
