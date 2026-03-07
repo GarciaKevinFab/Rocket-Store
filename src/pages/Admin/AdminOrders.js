@@ -21,8 +21,10 @@ const AdminOrders = () => {
 
   const fetchOrders = async (status) => {
     setLoading(true);
-    const data = await getAllOrders(status === "todos" ? null : status);
-    setOrders(data);
+    try {
+      const data = await getAllOrders(status === "todos" ? null : status);
+      setOrders(data);
+    } catch (e) { console.error(e); }
     setLoading(false);
   };
 
@@ -37,62 +39,69 @@ const AdminOrders = () => {
   return (
     <div>
       <h1 className="text-2xl font-titleFont font-bold mb-6">Pedidos</h1>
+
       {/* Tabs */}
       <div className="flex flex-wrap gap-2 mb-6">
         {statusTabs.map((tab) => (
           <button
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
-            className={`px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${activeTab === tab.key ? "bg-primeColor text-white" : "bg-white text-gray-600 hover:bg-gray-100"}`}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+              activeTab === tab.key
+                ? "bg-primeColor text-white shadow-sm"
+                : "bg-white text-gray-500 hover:bg-gray-50 border border-gray-200"
+            }`}
           >
             {tab.label}
           </button>
         ))}
       </div>
+
       {loading ? (
-        <p className="text-gray-500">Cargando pedidos...</p>
+        <div className="space-y-2">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="bg-white rounded-xl p-4 animate-pulse shadow-sm">
+              <div className="flex gap-4"><div className="h-4 bg-gray-200 rounded w-20" /><div className="h-4 bg-gray-200 rounded w-32" /><div className="h-4 bg-gray-100 rounded w-16" /></div>
+            </div>
+          ))}
+        </div>
       ) : (
-        <div className="bg-white rounded-lg shadow-md overflow-x-auto">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-x-auto">
           <table className="w-full text-sm min-w-[850px]">
-            <thead className="bg-gray-50">
+            <thead className="bg-gray-50/80">
               <tr>
-                <th className="text-left px-4 py-3 font-semibold">Pedido</th>
-                <th className="text-left px-4 py-3 font-semibold">Cliente</th>
-                <th className="text-left px-4 py-3 font-semibold">Total</th>
-                <th className="text-left px-4 py-3 font-semibold">Pago</th>
-                <th className="text-left px-4 py-3 font-semibold">Estado</th>
-                <th className="text-left px-4 py-3 font-semibold">Envio</th>
-                <th className="text-left px-4 py-3 font-semibold">Fecha</th>
-                <th className="text-left px-4 py-3 font-semibold">Accion</th>
+                {["Pedido", "Cliente", "Total", "Pago", "Estado", "Envio", "Fecha", "Accion"].map((h) => (
+                  <th key={h} className="text-left px-4 py-3.5 font-semibold text-gray-500 text-xs uppercase tracking-wide">{h}</th>
+                ))}
               </tr>
             </thead>
             <tbody>
               {orders.map((order) => (
-                <tr key={order.id} className="border-t hover:bg-gray-50">
-                  <td className="px-4 py-3 font-mono text-xs">#{order.id.slice(-8).toUpperCase()}</td>
+                <tr key={order.id} className="border-t border-gray-50 hover:bg-gray-50/50 duration-150">
+                  <td className="px-4 py-3 font-mono text-xs font-medium text-primeColor">#{order.id.slice(-8).toUpperCase()}</td>
                   <td className="px-4 py-3">
-                    <div>{order.userName}</div>
-                    <div className="text-xs text-gray-500">{order.userEmail}</div>
+                    <div className="font-medium text-sm">{order.userName}</div>
+                    <div className="text-xs text-gray-400">{order.userEmail || order.guestEmail}</div>
                   </td>
-                  <td className="px-4 py-3 font-semibold">S/.{order.total?.toFixed(2)}</td>
-                  <td className="px-4 py-3 capitalize">{order.paymentMethod}</td>
+                  <td className="px-4 py-3 font-bold">S/.{order.total?.toFixed(2)}</td>
+                  <td className="px-4 py-3 capitalize text-gray-500">{order.paymentMethod}</td>
                   <td className="px-4 py-3">
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${orderStatuses[order.status]?.color || "bg-gray-100"}`}>
+                    <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${orderStatuses[order.status]?.color || "bg-gray-100"}`}>
                       {orderStatuses[order.status]?.label || order.status}
                     </span>
                   </td>
                   <td className="px-4 py-3">
                     {order.tracking ? (
-                      <span className="text-green-600 flex items-center gap-1 text-xs" title={`${order.tracking.carrier}: ${order.tracking.number}`}>
+                      <span className="text-green-600 flex items-center gap-1.5 text-xs font-medium">
                         <FaTruck /> {order.tracking.carrier}
                       </span>
                     ) : (
-                      <span className="text-gray-400 text-xs">---</span>
+                      <span className="text-gray-300 text-xs">Sin envio</span>
                     )}
                   </td>
-                  <td className="px-4 py-3 text-xs text-gray-500">{formatDate(order.createdAt)}</td>
+                  <td className="px-4 py-3 text-xs text-gray-400">{formatDate(order.createdAt)}</td>
                   <td className="px-4 py-3">
-                    <Link to={`/admin/pedidos/${order.id}`} className="text-blue-600 hover:text-blue-800 text-sm">
+                    <Link to={`/admin/pedidos/${order.id}`} className="px-3 py-1.5 text-xs font-medium text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 duration-200">
                       Ver
                     </Link>
                   </td>
@@ -101,7 +110,7 @@ const AdminOrders = () => {
             </tbody>
           </table>
           {orders.length === 0 && (
-            <p className="text-center text-gray-500 py-8">No hay pedidos</p>
+            <div className="text-center py-12"><p className="text-4xl mb-2">📋</p><p className="text-gray-500">No hay pedidos</p></div>
           )}
         </div>
       )}

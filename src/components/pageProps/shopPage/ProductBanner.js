@@ -3,7 +3,7 @@ import { BsGridFill } from "react-icons/bs";
 import { ImList } from "react-icons/im";
 import { GoTriangleDown } from "react-icons/go";
 
-const ProductBanner = ({ itemsPerPageFromBanner, gridView, setGridView }) => {
+const ProductBanner = ({ itemsPerPageFromBanner, gridView, setGridView, sortBy, setSortBy }) => {
   return (
     <div className="w-full flex flex-col md:flex-row md:items-center justify-between bg-white rounded-xl p-4 shadow-sm border border-gray-100">
       <div className="flex items-center gap-3">
@@ -32,12 +32,15 @@ const ProductBanner = ({ itemsPerPageFromBanner, gridView, setGridView }) => {
         <div className="flex items-center gap-2 text-sm text-gray-500 relative">
           <label className="block font-medium">Ordenar:</label>
           <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
             className="w-32 md:w-44 border border-gray-200 py-2 px-3 cursor-pointer text-primeColor text-sm rounded-lg appearance-none focus:outline-none focus:border-primeColor duration-200 bg-gray-50"
           >
-            <option value="Best Sellers">Mas Vendidos</option>
-            <option value="New Arrival">Nuevas Llegadas</option>
-            <option value="Featured">Destacado</option>
-            <option value="Final Offer">Oferta Final</option>
+            <option value="newest">Mas Recientes</option>
+            <option value="price_asc">Precio: Menor a Mayor</option>
+            <option value="price_desc">Precio: Mayor a Menor</option>
+            <option value="name_asc">Nombre: A-Z</option>
+            <option value="name_desc">Nombre: Z-A</option>
           </select>
           <span className="absolute text-xs right-2.5 top-3 text-gray-400 pointer-events-none">
             <GoTriangleDown />

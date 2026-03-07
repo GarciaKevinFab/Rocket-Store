@@ -1,4 +1,4 @@
-import logo from "./rocketLogo.png";
+import logo from "./RUME_logo.png";
 import bannerImgOne from "./banner/bannerImgOne.png";
 import bannerImgTwo from "./banner/bannerImgTwo.png";
 import bannerImgThree from "./banner/bannerImgThree.png";

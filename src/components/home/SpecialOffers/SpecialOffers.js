@@ -1,54 +1,58 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Heading from "../Products/Heading";
 import Product from "../Products/Product";
-import {
-  spfOne,
-  spfTwo,
-  spfThree,
-  spfFour,
-} from "../../../assets/images/index";
+import { getProductsBySection } from "../../../services/productService";
 
 const SpecialOffers = () => {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const data = await getProductsBySection("specialOffer");
+        setProducts(data);
+      } catch (e) { console.error(e); }
+      setLoading(false);
+    };
+    load();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="w-full pb-20">
+        <Heading heading="Ofertas Especiales" />
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 lgl:grid-cols-3 xl:grid-cols-4 gap-10">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="animate-pulse">
+              <div className="bg-gray-200 rounded-xl h-64 w-full mb-3" />
+              <div className="h-4 bg-gray-200 rounded w-3/4 mb-2" />
+              <div className="h-4 bg-gray-100 rounded w-1/2" />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (products.length === 0) return null;
+
   return (
     <div className="w-full pb-20">
-      <Heading heading="Oferta Especial" />
+      <Heading heading="Ofertas Especiales" />
       <div className="w-full grid grid-cols-1 md:grid-cols-2 lgl:grid-cols-3 xl:grid-cols-4 gap-10">
-        <Product
-          _id="1001"
-          img={spfOne}
-          productName="Perfume Invictus Paco Rabanne"
-          price="189.00"
-          color="Dorado"
-          badge={true}
-          des="Fragancia masculina iconica con notas de pomelo, madera de guayaco y ambar gris. Ideal para el hombre moderno."
-        />
-        <Product
-          _id="1002"
-          img={spfTwo}
-          productName="iPhone 15 128GB"
-          price="4299.00"
-          color="Negro"
-          badge={true}
-          des="Chip A16 Bionic, pantalla Super Retina XDR de 6.1 pulgadas, Dynamic Island y camara dual de 48MP."
-        />
-        <Product
-          _id="1003"
-          img={spfThree}
-          productName="AirPods Pro 2da Generacion"
-          price="899.00"
-          color="Blanco"
-          badge={true}
-          des="Cancelacion activa de ruido adaptativa, audio espacial personalizado y hasta 6 horas de reproduccion."
-        />
-        <Product
-          _id="1004"
-          img={spfFour}
-          productName="Perfume Sauvage Dior EDT"
-          price="320.00"
-          color="Azul"
-          badge={true}
-          des="Fragancia masculina fresca y salvaje con notas de bergamota y ambroxan. Un clasico contemporaneo de Dior."
-        />
+        {products.map((p) => (
+          <Product
+            key={p._id}
+            _id={p._id}
+            img={p.img}
+            productName={p.productName}
+            price={p.price}
+            color={p.color}
+            badge={p.badge}
+            des={p.des}
+          />
+        ))}
       </div>
     </div>
   );

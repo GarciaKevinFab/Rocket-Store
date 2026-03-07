@@ -3,29 +3,38 @@ import { useLocation, useParams } from "react-router-dom";
 import Breadcrumbs from "../../components/pageProps/Breadcrumbs";
 import ProductInfo from "../../components/pageProps/productDetails/ProductInfo";
 import ProductsOnSale from "../../components/pageProps/productDetails/ProductsOnSale";
-import { paginationItems } from "../../constants";
+import { getProductById } from "../../services/productService";
 
 const ProductDetails = () => {
   const location = useLocation();
   const { _id } = useParams();
   const [prevLocation, setPrevLocation] = useState("");
   const [productInfo, setProductInfo] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (location.state?.item) {
-      setProductInfo(location.state.item);
-    } else {
-      const found = paginationItems.find(
-        (item) => String(item._id) === String(_id)
-      );
-      if (found) {
-        setProductInfo(found);
+    const loadProduct = async () => {
+      setLoading(true);
+      if (location.state?.item) {
+        setProductInfo(location.state.item);
+        setLoading(false);
+      } else {
+        try {
+          const product = await getProductById(_id);
+          if (product) {
+            setProductInfo(product);
+          }
+        } catch (e) {
+          console.error("Error loading product:", e);
+        }
+        setLoading(false);
       }
-    }
-    setPrevLocation(location.pathname);
+      setPrevLocation(location.pathname);
+    };
+    loadProduct();
   }, [location, _id]);
 
-  if (!productInfo) {
+  if (loading || !productInfo) {
     return (
       <div className="max-w-container mx-auto px-4 py-20 text-center">
         <div className="w-12 h-12 border-4 border-gray-200 border-t-primeColor rounded-full animate-spin mx-auto mb-4"></div>

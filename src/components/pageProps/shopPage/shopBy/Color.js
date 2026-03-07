@@ -2,41 +2,50 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import NavTitle from "./NavTitle";
 
-const Color = () => {
-  const [showColors, setShowColors] = useState(true);
-  const colors = [
-    { _id: 9001, title: "Verde", base: "#22c55e" },
-    { _id: 9002, title: "Plomo", base: "#a3a3a3" },
-    { _id: 9003, title: "Rojo", base: "#dc2626" },
-    { _id: 9004, title: "Amarillo", base: "#f59e0b" },
-    { _id: 9005, title: "Azul", base: "#3b82f6" },
-  ];
+const colors = [
+  { name: "Negro", hex: "#000000" },
+  { name: "Blanco", hex: "#ffffff" },
+  { name: "Dorado", hex: "#d4a574" },
+  { name: "Azul", hex: "#3b82f6" },
+  { name: "Rojo", hex: "#dc2626" },
+  { name: "Verde", hex: "#22c55e" },
+  { name: "Plomo", hex: "#a3a3a3" },
+  { name: "Amarillo", hex: "#f59e0b" },
+];
+
+const Color = ({ activeColor = "", onSelect = () => {} }) => {
+  const [showColor, setShowColor] = useState(true);
+
+  const handleClick = (colorName) => {
+    onSelect(activeColor === colorName ? "" : colorName);
+  };
 
   return (
-    <div>
-      <div
-        onClick={() => setShowColors(!showColors)}
-        className="cursor-pointer"
-      >
+    <div className="cursor-pointer">
+      <div onClick={() => setShowColor(!showColor)}>
         <NavTitle title="Color" icons={true} />
       </div>
-      {showColors && (
-        <motion.div
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <ul className="flex flex-col gap-2 text-sm text-gray-500">
-            {colors.map((item) => (
+      {showColor && (
+        <motion.div initial={{ y: -10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.3 }}>
+          <ul className="flex flex-col gap-1 text-sm text-gray-500">
+            {colors.map((color) => (
               <li
-                key={item._id}
-                className="border-b border-gray-100 pb-2 flex items-center gap-2 hover:text-primeColor duration-200 cursor-pointer rounded-lg hover:bg-gray-50 px-2 py-1"
+                key={color.name}
+                onClick={() => handleClick(color.name)}
+                className={`flex items-center gap-3 px-3 py-2 rounded-lg cursor-pointer duration-200 ${
+                  activeColor === color.name
+                    ? "bg-primeColor text-white font-medium"
+                    : "hover:bg-gray-50 hover:text-primeColor"
+                }`}
               >
                 <span
-                  style={{ background: item.base }}
-                  className="w-4 h-4 rounded-full border-2 border-white shadow-sm"
-                ></span>
-                {item.title}
+                  className="w-4 h-4 rounded-full border-2 shadow-sm flex-shrink-0"
+                  style={{
+                    backgroundColor: color.hex,
+                    borderColor: activeColor === color.name ? "#fff" : color.hex === "#ffffff" ? "#d1d5db" : color.hex,
+                  }}
+                />
+                {color.name}
               </li>
             ))}
           </ul>

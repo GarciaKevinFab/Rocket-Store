@@ -2,40 +2,38 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import NavTitle from "./NavTitle";
 
-const Brand = () => {
+const Brand = ({ brands = [], activeBrand = "", onSelect = () => {} }) => {
   const [showBrands, setShowBrands] = useState(true);
-  const brands = [
-    { _id: 9006, title: "Apple" },
-    { _id: 9007, title: "Samsung" },
-    { _id: 9008, title: "Carolina Herrera" },
-    { _id: 9009, title: "Dior" },
-    { _id: 9010, title: "Paco Rabanne" },
-    { _id: 9011, title: "Versace" },
-  ];
+
+  const handleClick = (brand) => {
+    onSelect(activeBrand === brand ? "" : brand);
+  };
 
   return (
     <div>
-      <div
-        onClick={() => setShowBrands(!showBrands)}
-        className="cursor-pointer"
-      >
-        <NavTitle title="Marca" icons={true} />
+      <div onClick={() => setShowBrands(!showBrands)} className="cursor-pointer">
+        <NavTitle title="Marcas" icons={true} />
       </div>
       {showBrands && (
-        <motion.div
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <ul className="flex flex-col gap-2 text-sm text-gray-500">
-            {brands.map((item) => (
-              <li
-                key={item._id}
-                className="border-b border-gray-100 pb-2 flex items-center gap-2 hover:text-primeColor duration-200 cursor-pointer rounded-lg hover:bg-gray-50 px-2 py-1"
-              >
-                {item.title}
-              </li>
-            ))}
+        <motion.div initial={{ y: -10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.3 }}>
+          <ul className="flex flex-col gap-1 text-sm text-gray-500">
+            {brands.length > 0 ? (
+              brands.map((brand) => (
+                <li
+                  key={brand}
+                  onClick={() => handleClick(brand)}
+                  className={`px-3 py-2 rounded-lg cursor-pointer duration-200 ${
+                    activeBrand === brand
+                      ? "bg-primeColor text-white font-medium"
+                      : "hover:bg-gray-50 hover:text-primeColor"
+                  }`}
+                >
+                  {brand}
+                </li>
+              ))
+            ) : (
+              <li className="px-3 py-2 text-gray-400 text-xs">No hay marcas disponibles</li>
+            )}
           </ul>
         </motion.div>
       )}

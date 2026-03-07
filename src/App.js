@@ -32,6 +32,7 @@ import AdminOrders from "./pages/Admin/AdminOrders";
 import AdminOrderDetail from "./pages/Admin/AdminOrderDetail";
 import AdminCustomers from "./pages/Admin/AdminCustomers";
 import AdminCustomerDetail from "./pages/Admin/AdminCustomerDetail";
+import AdminCategories from "./pages/Admin/AdminCategories";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminRoute from "./components/AdminRoute";
 
@@ -93,6 +94,7 @@ const router = createBrowserRouter(
         <Route path="productos" element={<AdminProducts />} />
         <Route path="productos/nuevo" element={<AdminProductForm />} />
         <Route path="productos/editar/:id" element={<AdminProductForm />} />
+        <Route path="categorias" element={<AdminCategories />} />
         <Route path="pedidos" element={<AdminOrders />} />
         <Route path="pedidos/:id" element={<AdminOrderDetail />} />
         <Route path="clientes" element={<AdminCustomers />} />

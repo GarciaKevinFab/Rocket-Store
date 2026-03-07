@@ -1,38 +1,46 @@
-import React, { useState } from "react";
-import { ImPlus } from "react-icons/im";
+import React from "react";
 import NavTitle from "./NavTitle";
 
-const Category = () => {
-  const [showSubCatOne, setShowSubCatOne] = useState(false);
-  const items = [
-    { _id: 990, title: "Perfumes", icons: true },
-    { _id: 991, title: "Smartphones" },
-    { _id: 992, title: "Accesorios Tech", icons: true },
-    { _id: 993, title: "Relojes" },
-    { _id: 994, title: "Cuidado Personal" },
-    { _id: 995, title: "Otros" },
-  ];
+const Category = ({ categories = [], activeCategory = "", onSelect = () => {} }) => {
+  const handleClick = (catName) => {
+    onSelect(activeCategory === catName ? "" : catName);
+  };
+
   return (
     <div className="w-full">
       <NavTitle title="Categorias" icons={false} />
       <div>
-        <ul className="flex flex-col gap-2 text-sm text-gray-500">
-          {items.map(({ _id, title, icons }) => (
-            <li
-              key={_id}
-              className="border-b border-gray-100 pb-2 flex items-center justify-between hover:text-primeColor duration-200 cursor-pointer rounded-lg hover:bg-gray-50 px-2 py-1"
-            >
-              {title}
-              {icons && (
-                <span
-                  onClick={() => setShowSubCatOne(!showSubCatOne)}
-                  className="text-[10px] cursor-pointer text-gray-300 hover:text-primeColor duration-300"
-                >
-                  <ImPlus />
-                </span>
-              )}
-            </li>
-          ))}
+        <ul className="flex flex-col gap-1 text-sm text-gray-500">
+          {categories.length > 0 ? (
+            categories.map((cat) => (
+              <li
+                key={cat.id}
+                onClick={() => handleClick(cat.name)}
+                className={`flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer duration-200 ${
+                  activeCategory === cat.name
+                    ? "bg-primeColor text-white font-medium"
+                    : "hover:bg-gray-50 hover:text-primeColor"
+                }`}
+              >
+                {cat.icon && <span className="text-base">{cat.icon}</span>}
+                <span className="flex-1">{cat.name}</span>
+              </li>
+            ))
+          ) : (
+            ["Perfumes", "Smartphones", "Accesorios Tech", "Relojes", "Cuidado Personal", "Otros"].map((title) => (
+              <li
+                key={title}
+                onClick={() => handleClick(title)}
+                className={`px-3 py-2 rounded-lg cursor-pointer duration-200 ${
+                  activeCategory === title
+                    ? "bg-primeColor text-white font-medium"
+                    : "hover:bg-gray-50 hover:text-primeColor"
+                }`}
+              >
+                {title}
+              </li>
+            ))
+          )}
         </ul>
       </div>
     </div>

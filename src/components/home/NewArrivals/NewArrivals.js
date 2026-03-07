@@ -1,110 +1,76 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import Heading from "../Products/Heading";
 import Product from "../Products/Product";
-import {
-  newArrOne,
-  newArrTwo,
-  newArrThree,
-  newArrFour,
-} from "../../../assets/images/index";
 import SampleNextArrow from "./SampleNextArrow";
 import SamplePrevArrow from "./SamplePrevArrow";
+import { getProductsBySection } from "../../../services/productService";
 
 const NewArrivals = () => {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const data = await getProductsBySection("newArrival");
+        setProducts(data);
+      } catch (e) { console.error(e); }
+      setLoading(false);
+    };
+    load();
+  }, []);
+
   const settings = {
-    infinite: true,
+    infinite: products.length > 4,
     speed: 500,
-    slidesToShow: 4,
+    slidesToShow: Math.min(4, products.length || 1),
     slidesToScroll: 1,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
     responsive: [
-      {
-        breakpoint: 1025,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-          infinite: true,
-        },
-      },
-      {
-        breakpoint: 769,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          infinite: true,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          infinite: true,
-        },
-      },
+      { breakpoint: 1025, settings: { slidesToShow: Math.min(3, products.length || 1), slidesToScroll: 1, infinite: products.length > 3 } },
+      { breakpoint: 769, settings: { slidesToShow: Math.min(2, products.length || 1), slidesToScroll: 2, infinite: products.length > 2 } },
+      { breakpoint: 480, settings: { slidesToShow: 1, slidesToScroll: 1, infinite: products.length > 1 } },
     ],
   };
+
+  if (loading) {
+    return (
+      <div className="w-full pb-16">
+        <Heading heading="Nuevas Llegadas" />
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="animate-pulse">
+              <div className="bg-gray-200 rounded-xl h-64 w-full mb-3" />
+              <div className="h-4 bg-gray-200 rounded w-3/4 mb-2" />
+              <div className="h-4 bg-gray-100 rounded w-1/2" />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (products.length === 0) return null;
+
   return (
     <div className="w-full pb-16">
       <Heading heading="Nuevas Llegadas" />
       <Slider {...settings}>
-        <div className="px-2">
-          <Product
-            _id="1009"
-            img={newArrOne}
-            productName="Apple Watch Series 9 GPS"
-            price="1899.00"
-            color="Negro"
-            badge={true}
-            des="Chip S9, pantalla Retina siempre activa, sensor de oxigeno en sangre y ECG. Resistente al agua hasta 50 metros."
-          />
-        </div>
-        <div className="px-2">
-          <Product
-            _id="1010"
-            img={newArrTwo}
-            productName="Samsung Galaxy S24 Ultra"
-            price="5199.00"
-            color="Negro"
-            badge={true}
-            des="Pantalla Dynamic AMOLED 2X de 6.8 pulgadas, camara de 200MP, S Pen integrado y procesador Snapdragon 8 Gen 3."
-          />
-        </div>
-        <div className="px-2">
-          <Product
-            _id="1011"
-            img={newArrThree}
-            productName="Set de Cuidado Facial Completo"
-            price="120.00"
-            color="Variado"
-            badge={true}
-            des="Kit completo con limpiador facial, tonico, serum de vitamina C y crema hidratante. Rutina de cuidado para piel radiante."
-          />
-        </div>
-        <div className="px-2">
-          <Product
-            _id="1012"
-            img={newArrFour}
-            productName="iPhone 15 Pro Max 256GB"
-            price="5999.00"
-            color="Titanio Natural"
-            badge={false}
-            des="El iPhone mas potente con chip A17 Pro, camara de 48MP, pantalla Super Retina XDR de 6.7 pulgadas y cuerpo de titanio."
-          />
-        </div>
-        <div className="px-2">
-          <Product
-            _id="1014"
-            img={newArrTwo}
-            productName="Samsung Galaxy A55 5G"
-            price="1599.00"
-            color="Azul"
-            badge={true}
-            des="Pantalla Super AMOLED de 6.6 pulgadas, triple camara de 50MP, bateria de 5000mAh y conectividad 5G."
-          />
-        </div>
+        {products.map((p) => (
+          <div key={p._id} className="px-2">
+            <Product
+              _id={p._id}
+              img={p.img}
+              productName={p.productName}
+              price={p.price}
+              color={p.color}
+              badge={p.badge}
+              des={p.des}
+            />
+          </div>
+        ))}
       </Slider>
     </div>
   );
