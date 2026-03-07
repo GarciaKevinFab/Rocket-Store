@@ -11,8 +11,8 @@ import { FaTrash, FaShoppingBag, FaLock, FaTruck, FaShieldAlt } from "react-icon
 const Cart = () => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.orebiReducer.products);
-  const [totalAmt, setTotalAmt] = useState("");
-  const [shippingCharge, setShippingCharge] = useState("");
+  const [totalAmt, setTotalAmt] = useState(0);
+  const [shippingCharge, setShippingCharge] = useState(0);
   useEffect(() => {
     let price = 0;
     products.map((item) => {
@@ -111,7 +111,7 @@ const Cart = () => {
                   </div>
                   <div className="border-t pt-3 mt-1 flex items-center justify-between">
                     <span className="font-titleFont font-bold text-lg">Total</span>
-                    <span className="font-titleFont font-bold text-xl text-primeColor">S/.{(totalAmt + shippingCharge).toFixed(2)}</span>
+                    <span className="font-titleFont font-bold text-xl text-primeColor">S/.{(Number(totalAmt) + Number(shippingCharge)).toFixed(2)}</span>
                   </div>
                   <Link to="/checkout" className="mt-2">
                     <button className="w-full h-12 bg-primeColor text-white font-titleFont font-semibold rounded-lg hover:bg-black duration-300 text-base">

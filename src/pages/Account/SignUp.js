@@ -32,7 +32,6 @@ const SignUp = () => {
   const { signup } = useAuth();
   const navigate = useNavigate();
 
-  // Pre-fill from query params (post-purchase guest)
   const isPostPurchase = searchParams.has("email");
 
   useEffect(() => {
@@ -67,7 +66,6 @@ const SignUp = () => {
     try {
       const cred = await signup(email, password, { displayName: clientName, phone, address, city, department, district });
 
-      // Link guest orders to the new account
       if (isPostPurchase) {
         try {
           const linked = await linkGuestOrdersToUser(email, cred.user.uid);
@@ -91,100 +89,118 @@ const SignUp = () => {
     setLoading(false);
   };
 
+  const inputClass = "w-full h-11 placeholder:text-sm px-4 text-sm font-medium rounded-lg border border-gray-200 outline-none focus:border-primeColor duration-200 bg-gray-50";
+
   return (
     <div className="w-full min-h-screen flex flex-col lgl:flex-row items-center justify-start">
+      {/* Left Side */}
       <div className="w-full lgl:w-1/2 hidden lgl:inline-flex h-screen text-white">
-        <div className="w-full max-w-[450px] h-full bg-primeColor px-10 flex flex-col gap-6 justify-center">
+        <div className="w-full max-w-[450px] h-full bg-gradient-to-b from-primeColor to-gray-800 px-10 flex flex-col gap-6 justify-center">
           <Link to="/"><img src={logo} alt="logoImg" className="w-28" /></Link>
           <div className="flex flex-col gap-1 -mt-1">
-            <h1 className="font-titleFont text-xl font-medium">Puedes iniciar gratis</h1>
-            <p className="text-base">Crea tu cuenta para un acceso completo</p>
+            <h1 className="font-titleFont text-xl font-medium">Crea tu cuenta gratis</h1>
+            <p className="text-sm text-gray-300">Acceso completo a RUME IMPORT</p>
           </div>
           <div className="w-[300px] flex items-start gap-3">
-            <span className="text-green-500 mt-1"><BsCheckCircleFill /></span>
-            <p className="text-base text-gray-300"><span className="text-white font-semibold font-titleFont">Comienza rapido con RUME IMPORT</span><br />Registro facil, simple con pasos sencillos.</p>
+            <span className="text-green-400 mt-1"><BsCheckCircleFill /></span>
+            <p className="text-sm text-gray-300 leading-relaxed">
+              <span className="text-white font-semibold font-titleFont">Comienza rapido con RUME IMPORT</span><br />
+              Registro facil, simple con pasos sencillos.
+            </p>
           </div>
           <div className="w-[300px] flex items-start gap-3">
-            <span className="text-green-500 mt-1"><BsCheckCircleFill /></span>
-            <p className="text-base text-gray-300"><span className="text-white font-semibold font-titleFont">Accede a todos los servicios</span><br />Descuentos exclusivos, ofertas de temporada unicas.</p>
+            <span className="text-green-400 mt-1"><BsCheckCircleFill /></span>
+            <p className="text-sm text-gray-300 leading-relaxed">
+              <span className="text-white font-semibold font-titleFont">Accede a todos los servicios</span><br />
+              Descuentos exclusivos, ofertas de temporada unicas.
+            </p>
           </div>
           <div className="w-[300px] flex items-start gap-3">
-            <span className="text-green-500 mt-1"><BsCheckCircleFill /></span>
-            <p className="text-base text-gray-300"><span className="text-white font-semibold font-titleFont">Nuestros clientes confian en nosotros</span><br />Productos 100% originales importados.</p>
+            <span className="text-green-400 mt-1"><BsCheckCircleFill /></span>
+            <p className="text-sm text-gray-300 leading-relaxed">
+              <span className="text-white font-semibold font-titleFont">Nuestros clientes confian en nosotros</span><br />
+              Productos 100% originales importados.
+            </p>
           </div>
-          <div className="flex items-center justify-between mt-10">
-            <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300">&copy; RUME IMPORT</p>
-            <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300">Terminos</p>
-            <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300">Privacidad</p>
-            <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300">Seguridad</p>
+          <div className="flex items-center gap-6 mt-10">
+            <Link to="/"><p className="text-xs font-titleFont text-gray-400 hover:text-white cursor-pointer duration-300">&copy; RUME IMPORT</p></Link>
+            <p className="text-xs font-titleFont text-gray-400 hover:text-white cursor-pointer duration-300">Terminos</p>
+            <p className="text-xs font-titleFont text-gray-400 hover:text-white cursor-pointer duration-300">Privacidad</p>
           </div>
         </div>
       </div>
-      <div className="w-full lgl:w-1/2 flex flex-col justify-center items-center px-4 py-6 lgl:py-0">
-        <form onSubmit={handleSignUp} className="w-full max-w-[500px] flex flex-col justify-center">
+
+      {/* Right Side - Form */}
+      <div className="w-full lgl:w-1/2 flex flex-col justify-center items-center px-6 py-8 lgl:py-0">
+        <form onSubmit={handleSignUp} className="w-full max-w-[480px] flex flex-col justify-center">
           <div className="w-full max-h-[90vh] flex flex-col justify-start overflow-y-auto scrollbar-thin scrollbar-thumb-primeColor">
             {isPostPurchase && (
-              <div className="bg-green-50 border border-green-200 rounded-md p-3 mb-4">
+              <div className="bg-green-50 border border-green-200 rounded-lg p-3 mb-4">
                 <p className="text-sm text-green-800 font-medium">Crea tu cuenta para rastrear tus pedidos y comprar mas rapido</p>
-                <p className="text-xs text-green-600">Tus pedidos como invitado se vincularan automaticamente.</p>
+                <p className="text-xs text-green-600 mt-0.5">Tus pedidos como invitado se vincularan automaticamente.</p>
               </div>
             )}
-            <h1 className="font-titleFont underline underline-offset-4 decoration-[1px] font-semibold text-2xl mdl:text-3xl mb-4">Crear tu cuenta</h1>
-            <div className="flex flex-col gap-3">
-              <div className="flex flex-col gap-.5">
-                <p className="font-titleFont text-base font-semibold text-gray-600">Nombre completo</p>
-                <input onChange={(e) => { setClientName(e.target.value); setErrClientName(""); }} value={clientName} className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none" type="text" placeholder="Ej: Juan Perez" />
-                {errClientName && <p className="text-sm text-red-500 font-titleFont font-semibold px-4"><span className="font-bold italic mr-1">!</span>{errClientName}</p>}
+            <h1 className="font-titleFont font-bold text-2xl md:text-3xl mb-2 text-primeColor">Crear tu cuenta</h1>
+            <p className="text-sm text-gray-400 mb-6">Completa tus datos para registrarte</p>
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-1.5">
+                <label className="font-titleFont text-sm font-semibold text-gray-600">Nombre completo</label>
+                <input onChange={(e) => { setClientName(e.target.value); setErrClientName(""); }} value={clientName} className={inputClass} type="text" placeholder="Ej: Juan Perez" />
+                {errClientName && <p className="text-xs text-red-500 font-medium">{errClientName}</p>}
               </div>
-              <div className="flex flex-col gap-.5">
-                <p className="font-titleFont text-base font-semibold text-gray-600">Correo Electronico</p>
-                <input onChange={(e) => { setEmail(e.target.value); setErrEmail(""); }} value={email} className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none" type="email" placeholder="ejemplo@correo.com" />
-                {errEmail && <p className="text-sm text-red-500 font-titleFont font-semibold px-4"><span className="font-bold italic mr-1">!</span>{errEmail}</p>}
+              <div className="flex flex-col gap-1.5">
+                <label className="font-titleFont text-sm font-semibold text-gray-600">Correo Electronico</label>
+                <input onChange={(e) => { setEmail(e.target.value); setErrEmail(""); }} value={email} className={inputClass} type="email" placeholder="ejemplo@correo.com" />
+                {errEmail && <p className="text-xs text-red-500 font-medium">{errEmail}</p>}
               </div>
-              <div className="flex flex-col gap-.5">
-                <p className="font-titleFont text-base font-semibold text-gray-600">Telefono</p>
-                <input onChange={(e) => { setPhone(e.target.value); setErrPhone(""); }} value={phone} className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none" type="text" placeholder="987 654 321" />
-                {errPhone && <p className="text-sm text-red-500 font-titleFont font-semibold px-4"><span className="font-bold italic mr-1">!</span>{errPhone}</p>}
+              <div className="flex flex-col gap-1.5">
+                <label className="font-titleFont text-sm font-semibold text-gray-600">Telefono</label>
+                <input onChange={(e) => { setPhone(e.target.value); setErrPhone(""); }} value={phone} className={inputClass} type="text" placeholder="987 654 321" />
+                {errPhone && <p className="text-xs text-red-500 font-medium">{errPhone}</p>}
               </div>
-              <div className="flex flex-col gap-.5">
-                <p className="font-titleFont text-base font-semibold text-gray-600">Contrasena</p>
-                <input onChange={(e) => { setPassword(e.target.value); setErrPassword(""); }} value={password} className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none" type="password" placeholder="Minimo 6 caracteres" />
-                {errPassword && <p className="text-sm text-red-500 font-titleFont font-semibold px-4"><span className="font-bold italic mr-1">!</span>{errPassword}</p>}
+              <div className="flex flex-col gap-1.5">
+                <label className="font-titleFont text-sm font-semibold text-gray-600">Contrasena</label>
+                <input onChange={(e) => { setPassword(e.target.value); setErrPassword(""); }} value={password} className={inputClass} type="password" placeholder="Minimo 6 caracteres" />
+                {errPassword && <p className="text-xs text-red-500 font-medium">{errPassword}</p>}
               </div>
-              <div className="flex flex-col gap-.5">
-                <p className="font-titleFont text-base font-semibold text-gray-600">Direccion</p>
-                <input onChange={(e) => { setAddress(e.target.value); setErrAddress(""); }} value={address} className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none" type="text" placeholder="Av. Arequipa 123" />
-                {errAddress && <p className="text-sm text-red-500 font-titleFont font-semibold px-4"><span className="font-bold italic mr-1">!</span>{errAddress}</p>}
+              <div className="flex flex-col gap-1.5">
+                <label className="font-titleFont text-sm font-semibold text-gray-600">Direccion</label>
+                <input onChange={(e) => { setAddress(e.target.value); setErrAddress(""); }} value={address} className={inputClass} type="text" placeholder="Av. Arequipa 123" />
+                {errAddress && <p className="text-xs text-red-500 font-medium">{errAddress}</p>}
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="flex flex-col gap-.5">
-                  <p className="font-titleFont text-base font-semibold text-gray-600">Departamento</p>
-                  <select onChange={(e) => { setDepartment(e.target.value); setErrDepartment(""); }} value={department} className="w-full h-10 px-2 text-sm font-medium rounded-md border-[1px] border-gray-400 outline-none bg-white">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="flex flex-col gap-1.5">
+                  <label className="font-titleFont text-sm font-semibold text-gray-600">Departamento</label>
+                  <select onChange={(e) => { setDepartment(e.target.value); setErrDepartment(""); }} value={department} className={`${inputClass} cursor-pointer`}>
                     <option value="">Seleccionar</option>
                     {peruDepartments.map((dep) => <option key={dep} value={dep}>{dep}</option>)}
                   </select>
-                  {errDepartment && <p className="text-sm text-red-500 font-titleFont font-semibold px-4"><span className="font-bold italic mr-1">!</span>{errDepartment}</p>}
+                  {errDepartment && <p className="text-xs text-red-500 font-medium">{errDepartment}</p>}
                 </div>
-                <div className="flex flex-col gap-.5">
-                  <p className="font-titleFont text-base font-semibold text-gray-600">Ciudad</p>
-                  <input onChange={(e) => { setCity(e.target.value); setErrCity(""); }} value={city} className="w-full h-10 placeholder:text-sm px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none" type="text" placeholder="Lima" />
-                  {errCity && <p className="text-sm text-red-500 font-titleFont font-semibold px-4"><span className="font-bold italic mr-1">!</span>{errCity}</p>}
+                <div className="flex flex-col gap-1.5">
+                  <label className="font-titleFont text-sm font-semibold text-gray-600">Ciudad</label>
+                  <input onChange={(e) => { setCity(e.target.value); setErrCity(""); }} value={city} className={inputClass} type="text" placeholder="Lima" />
+                  {errCity && <p className="text-xs text-red-500 font-medium">{errCity}</p>}
                 </div>
               </div>
-              <div className="flex flex-col gap-.5">
-                <p className="font-titleFont text-base font-semibold text-gray-600">Distrito</p>
-                <input onChange={(e) => { setDistrict(e.target.value); setErrDistrict(""); }} value={district} className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none" type="text" placeholder="Miraflores" />
-                {errDistrict && <p className="text-sm text-red-500 font-titleFont font-semibold px-4"><span className="font-bold italic mr-1">!</span>{errDistrict}</p>}
+              <div className="flex flex-col gap-1.5">
+                <label className="font-titleFont text-sm font-semibold text-gray-600">Distrito</label>
+                <input onChange={(e) => { setDistrict(e.target.value); setErrDistrict(""); }} value={district} className={inputClass} type="text" placeholder="Miraflores" />
+                {errDistrict && <p className="text-xs text-red-500 font-medium">{errDistrict}</p>}
               </div>
-              <div className="flex items-start mdl:items-center gap-2">
-                <input onChange={() => setChecked(!checked)} className="w-4 h-4 mt-1 mdl:mt-0 cursor-pointer" type="checkbox" />
-                <p className="text-sm text-primeColor">Estoy de acuerdo con RUME IMPORT <span className="text-blue-500">Terminos de servicio</span> y <span className="text-blue-500">Politica de Privacidad</span>.</p>
+              <div className="flex items-start gap-2.5 mt-1">
+                <input onChange={() => setChecked(!checked)} className="w-4 h-4 mt-0.5 cursor-pointer accent-primeColor" type="checkbox" />
+                <p className="text-sm text-gray-500">Estoy de acuerdo con RUME IMPORT{" "}
+                  <span className="text-primeColor font-medium hover:underline cursor-pointer">Terminos de servicio</span> y{" "}
+                  <span className="text-primeColor font-medium hover:underline cursor-pointer">Politica de Privacidad</span>.
+                </p>
               </div>
-              <button type="submit" disabled={!checked || loading} className={`${checked ? "bg-primeColor hover:bg-black hover:text-white cursor-pointer" : "bg-gray-500 cursor-not-allowed"} w-full text-gray-200 text-base font-medium h-10 rounded-md duration-300 disabled:opacity-50`}>
+              <button type="submit" disabled={!checked || loading} className={`${checked ? "bg-primeColor hover:bg-black shadow-md hover:shadow-lg transform hover:-translate-y-0.5" : "bg-gray-300 cursor-not-allowed"} w-full text-white text-sm font-semibold h-11 rounded-lg duration-300 mt-1`}>
                 {loading ? "Creando cuenta..." : "Crear cuenta"}
               </button>
-              <p className="text-sm text-center font-titleFont font-medium pb-4">
-                Ya tienes una cuenta?{" "}<Link to="/signin"><span className="hover:text-blue-600 duration-300">Iniciar sesion</span></Link>
+              <p className="text-sm text-center text-gray-500 mt-1 pb-4">
+                Ya tienes una cuenta?{" "}
+                <Link to="/signin"><span className="text-primeColor font-semibold hover:underline duration-300">Iniciar sesion</span></Link>
               </p>
             </div>
           </div>
