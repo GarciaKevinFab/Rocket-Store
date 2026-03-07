@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getAllOrders } from "../../services/orderService";
 import { orderStatuses } from "../../constants/paymentConfig";
+import { FaTruck } from "react-icons/fa";
 
 const statusTabs = [
   { key: "todos", label: "Todos" },
@@ -52,7 +53,7 @@ const AdminOrders = () => {
         <p className="text-gray-500">Cargando pedidos...</p>
       ) : (
         <div className="bg-white rounded-lg shadow-md overflow-x-auto">
-          <table className="w-full text-sm min-w-[750px]">
+          <table className="w-full text-sm min-w-[850px]">
             <thead className="bg-gray-50">
               <tr>
                 <th className="text-left px-4 py-3 font-semibold">Pedido</th>
@@ -60,6 +61,7 @@ const AdminOrders = () => {
                 <th className="text-left px-4 py-3 font-semibold">Total</th>
                 <th className="text-left px-4 py-3 font-semibold">Pago</th>
                 <th className="text-left px-4 py-3 font-semibold">Estado</th>
+                <th className="text-left px-4 py-3 font-semibold">Envio</th>
                 <th className="text-left px-4 py-3 font-semibold">Fecha</th>
                 <th className="text-left px-4 py-3 font-semibold">Accion</th>
               </tr>
@@ -78,6 +80,15 @@ const AdminOrders = () => {
                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${orderStatuses[order.status]?.color || "bg-gray-100"}`}>
                       {orderStatuses[order.status]?.label || order.status}
                     </span>
+                  </td>
+                  <td className="px-4 py-3">
+                    {order.tracking ? (
+                      <span className="text-green-600 flex items-center gap-1 text-xs" title={`${order.tracking.carrier}: ${order.tracking.number}`}>
+                        <FaTruck /> {order.tracking.carrier}
+                      </span>
+                    ) : (
+                      <span className="text-gray-400 text-xs">---</span>
+                    )}
                   </td>
                   <td className="px-4 py-3 text-xs text-gray-500">{formatDate(order.createdAt)}</td>
                   <td className="px-4 py-3">

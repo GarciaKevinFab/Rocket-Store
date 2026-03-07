@@ -23,12 +23,15 @@ import Tienda from "./pages/Tienda/Tienda";
 import Checkout from "./pages/Checkout/Checkout";
 import MisPedidos from "./pages/Account/MisPedidos";
 import Perfil from "./pages/Account/Perfil";
+import TrackOrder from "./pages/Account/TrackOrder";
 import AdminLayout from "./pages/Admin/AdminLayout";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AdminProducts from "./pages/Admin/AdminProducts";
 import AdminProductForm from "./pages/Admin/AdminProductForm";
 import AdminOrders from "./pages/Admin/AdminOrders";
 import AdminOrderDetail from "./pages/Admin/AdminOrderDetail";
+import AdminCustomers from "./pages/Admin/AdminCustomers";
+import AdminCustomerDetail from "./pages/Admin/AdminCustomerDetail";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminRoute from "./components/AdminRoute";
 
@@ -57,14 +60,8 @@ const router = createBrowserRouter(
         <Route path="/offer" element={<Offer />} />
         <Route path="/product/:_id" element={<ProductDetails />} />
         <Route path="/cart" element={<Cart />} />
-        <Route
-          path="/checkout"
-          element={
-            <ProtectedRoute>
-              <Checkout />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/rastrear-pedido" element={<TrackOrder />} />
         <Route
           path="/mis-pedidos"
           element={
@@ -98,6 +95,8 @@ const router = createBrowserRouter(
         <Route path="productos/editar/:id" element={<AdminProductForm />} />
         <Route path="pedidos" element={<AdminOrders />} />
         <Route path="pedidos/:id" element={<AdminOrderDetail />} />
+        <Route path="clientes" element={<AdminCustomers />} />
+        <Route path="clientes/:id" element={<AdminCustomerDetail />} />
       </Route>
     </Route>
   )

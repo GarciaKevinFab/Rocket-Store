@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Outlet, Link, useLocation } from "react-router-dom";
-import { MdDashboard, MdInventory, MdShoppingBag, MdArrowBack, MdMenu, MdClose } from "react-icons/md";
+import { MdDashboard, MdInventory, MdShoppingBag, MdArrowBack, MdMenu, MdClose, MdPeople } from "react-icons/md";
 
 const navItems = [
   { path: "/admin", label: "Dashboard", icon: <MdDashboard /> },
   { path: "/admin/productos", label: "Productos", icon: <MdInventory /> },
   { path: "/admin/pedidos", label: "Pedidos", icon: <MdShoppingBag /> },
+  { path: "/admin/clientes", label: "Clientes", icon: <MdPeople /> },
 ];
 
 const AdminLayout = () => {

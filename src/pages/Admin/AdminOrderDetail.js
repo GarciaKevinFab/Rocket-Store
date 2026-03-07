@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getOrderById, updateOrderStatus } from "../../services/orderService";
+import { getOrderById, updateOrderStatus, updateOrderTracking } from "../../services/orderService";
 import { orderStatuses } from "../../constants/paymentConfig";
 import toast from "react-hot-toast";
+import { FaTruck } from "react-icons/fa";
+
+const carriers = ["Olva Courier", "Shalom", "InDrive", "Rappi", "Cruz del Sur Cargo", "Otro"];
 
 const AdminOrderDetail = () => {
   const { id } = useParams();
@@ -13,6 +16,11 @@ const AdminOrderDetail = () => {
   const [notes, setNotes] = useState("");
   const [updating, setUpdating] = useState(false);
 
+  // Tracking state
+  const [trackingNumber, setTrackingNumber] = useState("");
+  const [trackingCarrier, setTrackingCarrier] = useState("");
+  const [savingTracking, setSavingTracking] = useState(false);
+
   useEffect(() => {
     const fetchOrder = async () => {
       const data = await getOrderById(id);
@@ -20,6 +28,8 @@ const AdminOrderDetail = () => {
         setOrder(data);
         setNewStatus(data.status);
         setNotes(data.notes || "");
+        setTrackingNumber(data.tracking?.number || "");
+        setTrackingCarrier(data.tracking?.carrier || "");
       }
       setLoading(false);
     };
@@ -38,6 +48,22 @@ const AdminOrderDetail = () => {
     setUpdating(false);
   };
 
+  const handleSaveTracking = async () => {
+    if (!trackingNumber || !trackingCarrier) {
+      toast.error("Ingrese numero de guia y transportista");
+      return;
+    }
+    setSavingTracking(true);
+    try {
+      await updateOrderTracking(id, trackingNumber, trackingCarrier);
+      toast.success("Tracking actualizado!");
+      setOrder({ ...order, tracking: { number: trackingNumber, carrier: trackingCarrier } });
+    } catch (error) {
+      toast.error("Error al guardar tracking");
+    }
+    setSavingTracking(false);
+  };
+
   const formatDate = (timestamp) => {
     if (!timestamp) return "---";
     const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
@@ -54,9 +80,14 @@ const AdminOrderDetail = () => {
       </button>
       <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-6">
         <h1 className="text-xl sm:text-2xl font-titleFont font-bold">Pedido #{id.slice(-8).toUpperCase()}</h1>
-        <span className={`px-3 py-1 rounded-full text-sm font-medium ${orderStatuses[order.status]?.color || "bg-gray-100"}`}>
-          {orderStatuses[order.status]?.label || order.status}
-        </span>
+        <div className="flex items-center gap-2">
+          <span className={`px-3 py-1 rounded-full text-sm font-medium ${orderStatuses[order.status]?.color || "bg-gray-100"}`}>
+            {orderStatuses[order.status]?.label || order.status}
+          </span>
+          {order.isGuest && (
+            <span className="px-3 py-1 rounded-full text-sm font-medium bg-orange-100 text-orange-800">Invitado</span>
+          )}
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -86,7 +117,7 @@ const AdminOrderDetail = () => {
           <div className="bg-white rounded-lg shadow-md p-6">
             <h2 className="font-semibold text-lg mb-3">Cliente</h2>
             <p className="text-sm">{order.userName}</p>
-            <p className="text-sm text-gray-500">{order.userEmail}</p>
+            <p className="text-sm text-gray-500">{order.userEmail || order.guestEmail}</p>
             <p className="text-sm text-gray-500">{order.userPhone}</p>
             <h3 className="font-semibold text-sm mt-4 mb-1">Direccion de envio</h3>
             <p className="text-sm text-gray-600">
@@ -133,6 +164,48 @@ const AdminOrderDetail = () => {
             >
               {updating ? "Actualizando..." : "Actualizar Estado"}
             </button>
+          </div>
+
+          {/* Shipping Tracking */}
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <h2 className="font-semibold text-lg mb-3 flex items-center gap-2">
+              <FaTruck className="text-primeColor" /> Informacion de Envio
+            </h2>
+            {order.tracking && (
+              <div className="bg-green-50 border border-green-200 rounded-md p-3 mb-4 text-sm">
+                <p><span className="font-semibold">Transportista:</span> {order.tracking.carrier}</p>
+                <p><span className="font-semibold">Guia:</span> {order.tracking.number}</p>
+              </div>
+            )}
+            <div className="flex flex-col gap-3">
+              <div>
+                <label className="text-sm font-medium text-gray-600">Transportista</label>
+                <select
+                  value={trackingCarrier}
+                  onChange={(e) => setTrackingCarrier(e.target.value)}
+                  className="w-full h-10 px-4 border border-gray-300 rounded-md outline-none bg-white"
+                >
+                  <option value="">Seleccionar</option>
+                  {carriers.map((c) => <option key={c} value={c}>{c}</option>)}
+                </select>
+              </div>
+              <div>
+                <label className="text-sm font-medium text-gray-600">Numero de Guia</label>
+                <input
+                  value={trackingNumber}
+                  onChange={(e) => setTrackingNumber(e.target.value)}
+                  placeholder="Ej: OC-123456789"
+                  className="w-full h-10 px-4 border border-gray-300 rounded-md outline-none"
+                />
+              </div>
+              <button
+                onClick={handleSaveTracking}
+                disabled={savingTracking || !trackingNumber || !trackingCarrier}
+                className="w-full h-10 bg-blue-600 text-white rounded-md hover:bg-blue-700 duration-300 disabled:opacity-50 text-sm font-medium"
+              >
+                {savingTracking ? "Guardando..." : "Guardar Tracking"}
+              </button>
+            </div>
           </div>
         </div>
       </div>

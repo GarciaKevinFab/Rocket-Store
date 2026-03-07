@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BsCheckCircleFill } from "react-icons/bs";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { logo } from "../../assets/images";
 import { useAuth } from "../../context/AuthContext";
 import { peruDepartments } from "../../constants/paymentConfig";
+import { linkGuestOrdersToUser } from "../../services/orderService";
 import toast from "react-hot-toast";
 
 const SignUp = () => {
+  const [searchParams] = useSearchParams();
   const [clientName, setClientName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -30,6 +32,18 @@ const SignUp = () => {
   const { signup } = useAuth();
   const navigate = useNavigate();
 
+  // Pre-fill from query params (post-purchase guest)
+  const isPostPurchase = searchParams.has("email");
+
+  useEffect(() => {
+    const paramEmail = searchParams.get("email");
+    const paramName = searchParams.get("name");
+    const paramPhone = searchParams.get("phone");
+    if (paramEmail) setEmail(paramEmail);
+    if (paramName) setClientName(paramName);
+    if (paramPhone) setPhone(paramPhone);
+  }, [searchParams]);
+
   const EmailValidation = (email) => String(email).toLowerCase().match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i);
 
   const handleSignUp = async (e) => {
@@ -51,8 +65,24 @@ const SignUp = () => {
 
     setLoading(true);
     try {
-      await signup(email, password, { displayName: clientName, phone, address, city, department, district });
-      toast.success("Cuenta creada exitosamente!");
+      const cred = await signup(email, password, { displayName: clientName, phone, address, city, department, district });
+
+      // Link guest orders to the new account
+      if (isPostPurchase) {
+        try {
+          const linked = await linkGuestOrdersToUser(email, cred.user.uid);
+          if (linked > 0) {
+            toast.success(`Cuenta creada! ${linked} pedido(s) vinculado(s) a tu cuenta.`);
+          } else {
+            toast.success("Cuenta creada exitosamente!");
+          }
+        } catch (linkError) {
+          toast.success("Cuenta creada exitosamente!");
+        }
+      } else {
+        toast.success("Cuenta creada exitosamente!");
+      }
+
       navigate("/");
     } catch (error) {
       if (error.code === "auth/email-already-in-use") setErrEmail("Este correo ya esta registrado");
@@ -93,6 +123,12 @@ const SignUp = () => {
       <div className="w-full lgl:w-1/2 flex flex-col justify-center items-center px-4 py-6 lgl:py-0">
         <form onSubmit={handleSignUp} className="w-full max-w-[500px] flex flex-col justify-center">
           <div className="w-full max-h-[90vh] flex flex-col justify-start overflow-y-auto scrollbar-thin scrollbar-thumb-primeColor">
+            {isPostPurchase && (
+              <div className="bg-green-50 border border-green-200 rounded-md p-3 mb-4">
+                <p className="text-sm text-green-800 font-medium">Crea tu cuenta para rastrear tus pedidos y comprar mas rapido</p>
+                <p className="text-xs text-green-600">Tus pedidos como invitado se vincularan automaticamente.</p>
+              </div>
+            )}
             <h1 className="font-titleFont underline underline-offset-4 decoration-[1px] font-semibold text-2xl mdl:text-3xl mb-4">Crear tu cuenta</h1>
             <div className="flex flex-col gap-3">
               <div className="flex flex-col gap-.5">

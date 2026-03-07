@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useDropzone } from "react-dropzone";
 import Breadcrumbs from "../../components/pageProps/Breadcrumbs";
 import { useAuth } from "../../context/AuthContext";
@@ -8,7 +8,7 @@ import { createOrder } from "../../services/orderService";
 import { resetCart } from "../../redux/orebiSlice";
 import { paymentMethods, peruDepartments } from "../../constants/paymentConfig";
 import toast from "react-hot-toast";
-import { FaCheckCircle } from "react-icons/fa";
+import { FaCheckCircle, FaUserPlus } from "react-icons/fa";
 
 const Checkout = () => {
   const cartProducts = useSelector((state) => state.orebiReducer.products);
@@ -16,9 +16,14 @@ const Checkout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const isGuest = !currentUser;
+
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [orderId, setOrderId] = useState(null);
+
+  // Guest info
+  const [guestEmail, setGuestEmail] = useState("");
 
   // Shipping info
   const [shipping, setShipping] = useState({
@@ -55,11 +60,6 @@ const Checkout = () => {
     maxFiles: 1,
   });
 
-  if (!currentUser) {
-    navigate("/signin");
-    return null;
-  }
-
   if (cartProducts.length === 0 && !orderId) {
     navigate("/cart");
     return null;
@@ -69,6 +69,14 @@ const Checkout = () => {
     e.preventDefault();
     if (!shipping.name || !shipping.phone || !shipping.address || !shipping.district || !shipping.city || !shipping.department) {
       toast.error("Complete todos los campos de envio");
+      return;
+    }
+    if (isGuest && !guestEmail) {
+      toast.error("Ingrese su correo electronico");
+      return;
+    }
+    if (isGuest && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(guestEmail)) {
+      toast.error("Ingrese un correo valido");
       return;
     }
     setStep(2);
@@ -88,8 +96,10 @@ const Checkout = () => {
     setLoading(true);
     try {
       const orderData = {
-        userId: currentUser.uid,
-        userEmail: currentUser.email,
+        userId: currentUser ? currentUser.uid : null,
+        userEmail: currentUser ? currentUser.email : guestEmail,
+        guestEmail: isGuest ? guestEmail : null,
+        isGuest,
         userName: shipping.name,
         userPhone: shipping.phone,
         shippingAddress: {
@@ -128,6 +138,19 @@ const Checkout = () => {
     <div className="max-w-container mx-auto px-4">
       <Breadcrumbs title="Checkout" />
       <div className="pb-20">
+        {/* Guest Banner */}
+        {isGuest && step < 4 && (
+          <div className="max-w-lg mx-auto mb-6 bg-blue-50 border border-blue-200 rounded-lg p-4 flex flex-col sm:flex-row items-start sm:items-center gap-3">
+            <div className="flex-1">
+              <p className="text-sm text-blue-800 font-medium">Comprando como invitado</p>
+              <p className="text-xs text-blue-600">Puedes crear una cuenta despues de tu compra para rastrear tus pedidos facilmente.</p>
+            </div>
+            <Link to="/signin" className="text-sm text-blue-700 font-semibold hover:text-blue-900 whitespace-nowrap">
+              Iniciar Sesion
+            </Link>
+          </div>
+        )}
+
         {/* Progress Steps */}
         <div className="flex items-center justify-center mb-10 gap-2">
           {["Envio", "Pago", "Comprobante", "Confirmacion"].map((label, i) => (
@@ -148,6 +171,14 @@ const Checkout = () => {
           <form onSubmit={handleShippingSubmit} className="max-w-lg mx-auto">
             <h2 className="text-2xl font-titleFont font-semibold mb-6">Datos de Envio</h2>
             <div className="flex flex-col gap-4">
+              {/* Guest email field */}
+              {isGuest && (
+                <div>
+                  <label className="font-titleFont text-sm font-semibold text-gray-600">Correo Electronico *</label>
+                  <input value={guestEmail} onChange={(e) => setGuestEmail(e.target.value)} className="w-full h-10 px-4 border border-gray-400 rounded-md outline-none" type="email" placeholder="ejemplo@correo.com" />
+                  <p className="text-xs text-gray-400 mt-1">Usaremos este correo para que puedas rastrear tu pedido</p>
+                </div>
+              )}
               <div>
                 <label className="font-titleFont text-sm font-semibold text-gray-600">Nombre completo</label>
                 <input value={shipping.name} onChange={(e) => setShipping({ ...shipping, name: e.target.value })} className="w-full h-10 px-4 border border-gray-400 rounded-md outline-none" type="text" />
@@ -296,19 +327,50 @@ const Checkout = () => {
             <h2 className="text-2xl font-titleFont font-semibold mb-2">Pedido Registrado!</h2>
             <p className="text-gray-600 mb-2">Tu pedido <span className="font-bold">#{orderId?.slice(-8).toUpperCase()}</span> ha sido registrado exitosamente.</p>
             <p className="text-sm text-gray-500 mb-6">Verificaremos tu pago y te notificaremos cuando tu pedido este en camino.</p>
+
+            {/* Guest: show order ID for tracking */}
+            {isGuest && (
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 text-left">
+                <h3 className="font-semibold text-blue-800 mb-2">Guarda esta informacion para rastrear tu pedido:</h3>
+                <p className="text-sm text-blue-700"><span className="font-semibold">Email:</span> {guestEmail}</p>
+                <p className="text-sm text-blue-700 break-all"><span className="font-semibold">ID Pedido:</span> {orderId}</p>
+              </div>
+            )}
+
             <div className="bg-gray-50 rounded-lg p-4 mb-6 text-left">
               <h3 className="font-semibold mb-2">Estado del pedido:</h3>
               <div className="flex items-center gap-2">
                 <span className="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">Pendiente de verificacion</span>
               </div>
             </div>
-            <div className="flex gap-4">
-              <button onClick={() => navigate("/mis-pedidos")} className="flex-1 h-12 bg-primeColor text-white rounded-md hover:bg-black duration-300">
-                Ver Mis Pedidos
-              </button>
-              <button onClick={() => navigate("/tienda")} className="flex-1 h-12 border border-primeColor text-primeColor rounded-md hover:bg-gray-50 duration-300">
-                Seguir Comprando
-              </button>
+
+            <div className="flex flex-col sm:flex-row gap-4">
+              {isGuest ? (
+                <>
+                  <Link to="/rastrear-pedido" className="flex-1">
+                    <button className="w-full h-12 bg-primeColor text-white rounded-md hover:bg-black duration-300">
+                      Rastrear Pedido
+                    </button>
+                  </Link>
+                  <Link
+                    to={`/signup?email=${encodeURIComponent(guestEmail)}&name=${encodeURIComponent(shipping.name)}&phone=${encodeURIComponent(shipping.phone)}`}
+                    className="flex-1"
+                  >
+                    <button className="w-full h-12 border border-primeColor text-primeColor rounded-md hover:bg-gray-50 duration-300 flex items-center justify-center gap-2">
+                      <FaUserPlus /> Crear Cuenta
+                    </button>
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <button onClick={() => navigate("/mis-pedidos")} className="flex-1 h-12 bg-primeColor text-white rounded-md hover:bg-black duration-300">
+                    Ver Mis Pedidos
+                  </button>
+                  <button onClick={() => navigate("/tienda")} className="flex-1 h-12 border border-primeColor text-primeColor rounded-md hover:bg-gray-50 duration-300">
+                    Seguir Comprando
+                  </button>
+                </>
+              )}
             </div>
           </div>
         )}

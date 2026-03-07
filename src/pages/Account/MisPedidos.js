@@ -3,6 +3,7 @@ import { useAuth } from "../../context/AuthContext";
 import { getUserOrders } from "../../services/orderService";
 import { orderStatuses } from "../../constants/paymentConfig";
 import Breadcrumbs from "../../components/pageProps/Breadcrumbs";
+import { FaTruck } from "react-icons/fa";
 
 const MisPedidos = () => {
   const { currentUser } = useAuth();
@@ -82,6 +83,13 @@ const MisPedidos = () => {
                         </p>
                         <h4 className="font-semibold text-sm mt-3 mb-1">Metodo de pago</h4>
                         <p className="text-sm text-gray-600 capitalize">{order.paymentMethod}</p>
+                        {order.tracking && (
+                          <div className="mt-3 bg-blue-50 border border-blue-200 rounded-md p-3">
+                            <h4 className="font-semibold text-sm mb-1 flex items-center gap-1"><FaTruck className="text-blue-600" /> Tracking de Envio</h4>
+                            <p className="text-sm text-blue-700"><span className="font-semibold">Transportista:</span> {order.tracking.carrier}</p>
+                            <p className="text-sm text-blue-700"><span className="font-semibold">Guia:</span> {order.tracking.number}</p>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
