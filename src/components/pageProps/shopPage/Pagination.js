@@ -2,10 +2,16 @@ import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
 import Product from "../../home/Products/Product";
 import { paginationItems } from "../../../constants";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { FaChevronLeft, FaChevronRight, FaShoppingCart } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../../redux/orebiSlice";
+import Image from "../../designLayouts/Image";
+import Badge from "../../home/Products/Badge";
 
 const items = paginationItems;
-function Items({ currentItems }) {
+
+function GridItems({ currentItems }) {
   return (
     <>
       {currentItems &&
@@ -26,7 +32,60 @@ function Items({ currentItems }) {
   );
 }
 
-const Pagination = ({ itemsPerPage }) => {
+function ListItem({ item }) {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleDetails = () => {
+    navigate(`/product/${item._id}`, { state: { item } });
+  };
+
+  return (
+    <div className="w-full flex flex-col sm:flex-row gap-4 bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md duration-300">
+      <div className="w-full sm:w-52 h-52 flex-shrink-0 relative cursor-pointer" onClick={handleDetails}>
+        <Image className="w-full h-full object-cover" imgSrc={item.img} />
+        {item.badge && (
+          <div className="absolute top-3 left-3">
+            <Badge text="Nuevo" />
+          </div>
+        )}
+      </div>
+      <div className="flex-1 p-4 flex flex-col justify-between">
+        <div>
+          <h2 onClick={handleDetails} className="text-lg font-bold font-titleFont text-primeColor hover:underline cursor-pointer mb-1">
+            {item.productName}
+          </h2>
+          <p className="text-xs text-gray-400 mb-2">{item.color}</p>
+          <p className="text-sm text-gray-500 leading-relaxed line-clamp-2">{item.des}</p>
+        </div>
+        <div className="flex items-center justify-between mt-4">
+          <p className="text-xl font-bold text-primeColor">S/.{item.price}</p>
+          <button
+            onClick={() =>
+              dispatch(
+                addToCart({
+                  _id: item._id,
+                  name: item.productName,
+                  quantity: 1,
+                  image: item.img,
+                  badge: item.badge,
+                  price: item.price,
+                  colors: item.color,
+                })
+              )
+            }
+            className="flex items-center gap-2 px-4 py-2 bg-primeColor text-white text-sm font-medium rounded-lg hover:bg-black duration-300"
+          >
+            <FaShoppingCart className="text-xs" />
+            Agregar
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const Pagination = ({ itemsPerPage, gridView = true }) => {
   const [itemOffset, setItemOffset] = useState(0);
   const [itemStart, setItemStart] = useState(1);
 
@@ -49,10 +108,18 @@ const Pagination = ({ itemsPerPage }) => {
         </p>
       </div>
 
-      {/* Product Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mdl:gap-4 lg:gap-6">
-        <Items currentItems={currentItems} />
-      </div>
+      {/* Products - Grid or List */}
+      {gridView ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mdl:gap-4 lg:gap-6">
+          <GridItems currentItems={currentItems} />
+        </div>
+      ) : (
+        <div className="flex flex-col gap-4">
+          {currentItems.map((item) => (
+            <ListItem key={item._id} item={item} />
+          ))}
+        </div>
+      )}
 
       {/* Pagination */}
       <div className="flex flex-col mdl:flex-row justify-center mdl:justify-between items-center mt-8 pt-6 border-t border-gray-100">

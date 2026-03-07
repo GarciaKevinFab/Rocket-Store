@@ -7,7 +7,9 @@ import { FaFilter } from "react-icons/fa";
 
 const Tienda = () => {
   const [itemsPerPage, setItemsPerPage] = useState(12);
+  const [gridView, setGridView] = useState(true);
   const [showMobileFilter, setShowMobileFilter] = useState(false);
+
   const itemsPerPageFromBanner = (itemsPerPage) => {
     setItemsPerPage(itemsPerPage);
   };
@@ -44,8 +46,12 @@ const Tienda = () => {
 
         {/* Main Content */}
         <div className="w-full mdl:w-[80%] lgl:w-[75%] h-full flex flex-col gap-6">
-          <ProductBanner itemsPerPageFromBanner={itemsPerPageFromBanner} />
-          <Pagination itemsPerPage={itemsPerPage} />
+          <ProductBanner
+            itemsPerPageFromBanner={itemsPerPageFromBanner}
+            gridView={gridView}
+            setGridView={setGridView}
+          />
+          <Pagination itemsPerPage={itemsPerPage} gridView={gridView} />
         </div>
       </div>
     </div>

@@ -1,43 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { BsGridFill } from "react-icons/bs";
 import { ImList } from "react-icons/im";
 import { GoTriangleDown } from "react-icons/go";
 
-const ProductBanner = ({ itemsPerPageFromBanner }) => {
-  const [girdViewActive, setGridViewActive] = useState(true);
-  const [listViewActive, setListViewActive] = useState(false);
-  useEffect(() => {
-    const gridView = document.querySelector(".gridView");
-    const listView = document.querySelector(".listView");
-
-    gridView.addEventListener("click", () => {
-      setListViewActive(false);
-      setGridViewActive(true);
-    });
-    listView.addEventListener("click", () => {
-      setGridViewActive(false);
-      setListViewActive(true);
-    });
-  }, [girdViewActive, listViewActive]);
-
+const ProductBanner = ({ itemsPerPageFromBanner, gridView, setGridView }) => {
   return (
     <div className="w-full flex flex-col md:flex-row md:items-center justify-between bg-white rounded-xl p-4 shadow-sm border border-gray-100">
       <div className="flex items-center gap-3">
         <span
+          onClick={() => setGridView(true)}
           className={`${
-            girdViewActive
+            gridView
               ? "bg-primeColor text-white shadow-md"
               : "border border-gray-200 text-gray-400 hover:border-primeColor hover:text-primeColor"
-          } w-9 h-9 text-lg flex items-center justify-center cursor-pointer gridView rounded-lg duration-300`}
+          } w-9 h-9 text-lg flex items-center justify-center cursor-pointer rounded-lg duration-300`}
         >
           <BsGridFill />
         </span>
         <span
+          onClick={() => setGridView(false)}
           className={`${
-            listViewActive
+            !gridView
               ? "bg-primeColor text-white shadow-md"
               : "border border-gray-200 text-gray-400 hover:border-primeColor hover:text-primeColor"
-          } w-9 h-9 text-base flex items-center justify-center cursor-pointer listView rounded-lg duration-300`}
+          } w-9 h-9 text-base flex items-center justify-center cursor-pointer rounded-lg duration-300`}
         >
           <ImList />
         </span>
