@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
 import Product from "../../home/Products/Product";
 import { paginationItems } from "../../../constants";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const items = paginationItems;
 function Items({ currentItems }) {
@@ -41,25 +42,39 @@ const Pagination = ({ itemsPerPage }) => {
 
   return (
     <div>
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mdl:gap-4 lg:gap-8">
+      {/* Results info */}
+      <div className="flex items-center justify-between mb-4">
+        <p className="text-sm text-gray-500">
+          Mostrando <span className="font-semibold text-primeColor">{itemStart === 0 ? 1 : itemStart}</span> - <span className="font-semibold text-primeColor">{Math.min(endOffset, items.length)}</span> de <span className="font-semibold text-primeColor">{items.length}</span> productos
+        </p>
+      </div>
+
+      {/* Product Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mdl:gap-4 lg:gap-6">
         <Items currentItems={currentItems} />
       </div>
-      <div className="flex flex-col mdl:flex-row justify-center mdl:justify-between items-center mt-6">
+
+      {/* Pagination */}
+      <div className="flex flex-col mdl:flex-row justify-center mdl:justify-between items-center mt-8 pt-6 border-t border-gray-100">
         <ReactPaginate
-          nextLabel=""
+          nextLabel={<FaChevronRight className="text-xs" />}
+          previousLabel={<FaChevronLeft className="text-xs" />}
           onPageChange={handlePageClick}
           pageRangeDisplayed={3}
           marginPagesDisplayed={2}
           pageCount={pageCount}
-          previousLabel=""
           pageLinkClassName="w-9 h-9 border border-gray-200 hover:border-primeColor hover:text-primeColor duration-300 flex justify-center items-center rounded-lg text-sm"
-          pageClassName="mr-2"
-          containerClassName="flex text-sm font-semibold font-titleFont py-10"
+          pageClassName="mr-1.5"
+          containerClassName="flex items-center text-sm font-semibold font-titleFont py-6 gap-1"
           activeClassName="bg-primeColor text-white rounded-lg"
+          previousClassName="mr-2"
+          nextClassName="ml-2"
+          previousLinkClassName="w-9 h-9 border border-gray-200 hover:border-primeColor hover:text-primeColor duration-300 flex justify-center items-center rounded-lg"
+          nextLinkClassName="w-9 h-9 border border-gray-200 hover:border-primeColor hover:text-primeColor duration-300 flex justify-center items-center rounded-lg"
+          disabledClassName="opacity-30"
         />
-        <p className="text-sm font-normal text-gray-400">
-          Productos de {itemStart === 0 ? 1 : itemStart} a {endOffset} de{" "}
-          {items.length}
+        <p className="text-xs text-gray-400 mt-2 mdl:mt-0">
+          Pagina {Math.floor(itemOffset / itemsPerPage) + 1} de {pageCount}
         </p>
       </div>
     </div>

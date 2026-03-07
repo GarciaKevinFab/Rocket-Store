@@ -50,9 +50,11 @@ const Footer = () => {
           <FooterListTitle title="Tienda" />
           <ul className="flex flex-col gap-2">
             {["Perfumes", "Smartphones", "Accesorios Tech", "Relojes", "Cuidado Personal"].map((item) => (
-              <li key={item} className="font-titleFont text-sm text-gray-500 hover:text-primeColor hover:translate-x-1 transition-all duration-200 cursor-pointer">
-                {item}
-              </li>
+              <Link to="/tienda" key={item}>
+                <li className="font-titleFont text-sm text-gray-500 hover:text-primeColor hover:translate-x-1 transition-all duration-200 cursor-pointer">
+                  {item}
+                </li>
+              </Link>
             ))}
           </ul>
         </div>
