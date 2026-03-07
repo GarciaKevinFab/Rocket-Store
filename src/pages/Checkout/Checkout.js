@@ -160,7 +160,7 @@ const Checkout = () => {
                 <label className="font-titleFont text-sm font-semibold text-gray-600">Direccion</label>
                 <input value={shipping.address} onChange={(e) => setShipping({ ...shipping, address: e.target.value })} className="w-full h-10 px-4 border border-gray-400 rounded-md outline-none" type="text" />
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="font-titleFont text-sm font-semibold text-gray-600">Departamento</label>
                   <select value={shipping.department} onChange={(e) => setShipping({ ...shipping, department: e.target.value })} className="w-full h-10 px-4 border border-gray-400 rounded-md outline-none bg-white">

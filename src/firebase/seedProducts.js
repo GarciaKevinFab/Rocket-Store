@@ -67,7 +67,7 @@ const getBrand = (name) => {
   for (const [key, value] of Object.entries(brandMap)) {
     if (name.toLowerCase().includes(key.toLowerCase())) return value;
   }
-  return "Rocket";
+  return "Rume Import";
 };
 
 // Remove duplicate products by name

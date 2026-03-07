@@ -29,7 +29,7 @@ const Footer = () => {
     <div className="w-full bg-[#F5F5F3] py-20">
       <div className="max-w-container mx-auto grid grid-cols-1 md:grid-cols-2  xl:grid-cols-6 px-4 gap-10">
         <div className="col-span-2">
-          <FooterListTitle title=" Más sobre ROCKET" />
+          <FooterListTitle title=" Mas sobre RUME IMPORT" />
           <div className="flex flex-col gap-6">
             <p className="text-base w-full xl:w-[80%]">
             Tu tienda online de perfumes originales, smartphones y accesorios tech en Peru. Envios a todo el pais con Yape, Plin y transferencia bancaria.
@@ -100,7 +100,7 @@ const Footer = () => {
           <FooterListTitle title="Suscríbete a nuestro boletín." />
           <div className="w-full">
             <p className="text-center mb-4">
-            Mantente actualizado con las últimas ofertas y productos. ¡Únete a nuestra comunidad Rocket y sé el primero en conocer nuestros descuentos exclusivos!
+            Mantente actualizado con las ultimas ofertas y productos. Unite a la comunidad RUME IMPORT y se el primero en conocer nuestros descuentos exclusivos!
             </p>
             {subscription ? (
               <motion.p
@@ -129,7 +129,7 @@ const Footer = () => {
                 </div>
                 <button
                   onClick={handleSubscription}
-                  className="bg-white text-lightText w-[30%] h-10 hover:bg-black hover:text-white duration-300 text-base tracking-wide"
+                  className="bg-white text-lightText w-full xl:w-[30%] h-10 hover:bg-black hover:text-white duration-300 text-base tracking-wide"
                 >
                   Suscribir
                 </button>

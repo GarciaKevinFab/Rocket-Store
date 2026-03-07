@@ -24,6 +24,7 @@ const Header = () => {
     };
     ResponsiveMenu();
     window.addEventListener("resize", ResponsiveMenu);
+    return () => window.removeEventListener("resize", ResponsiveMenu);
   }, []);
 
   return (
@@ -67,9 +68,9 @@ const Header = () => {
                   initial={{ x: -300, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ duration: 0.5 }}
-                  className="w-[80%] h-full relative"
+                  className="w-[80%] max-w-[320px] h-full relative"
                 >
-                  <div className="w-full h-full bg-primeColor p-6">
+                  <div className="w-full h-full bg-primeColor p-6 overflow-y-auto">
                     <img
                       className="w-28 mb-6"
                       src={logo}
@@ -106,11 +107,11 @@ const Header = () => {
                           transition={{ duration: 0.4 }}
                           className="text-sm flex flex-col gap-1"
                         >
-                          <li className="headerSedenavLi">Nuevas Llegadas</li>
-                          <li className="headerSedenavLi">Gadgets</li>
-                          <li className="headerSedenavLi">Accesorios</li>
-                          <li className="headerSedenavLi">Electrónicos</li>
-                          <li className="headerSedenavLi">Otros</li>
+                          <li className="headerSedenavLi">Perfumes</li>
+                          <li className="headerSedenavLi">Smartphones</li>
+                          <li className="headerSedenavLi">Accesorios Tech</li>
+                          <li className="headerSedenavLi">Relojes</li>
+                          <li className="headerSedenavLi">Cuidado Personal</li>
                         </motion.ul>
                       )}
                     </div>
@@ -130,10 +131,11 @@ const Header = () => {
                           className="text-sm flex flex-col gap-1"
                         >
                           <li className="headerSedenavLi">Apple</li>
-                          <li className="headerSedenavLi">Ultron</li>
-                          <li className="headerSedenavLi">Unknown</li>
-                          <li className="headerSedenavLi">Shoppers Home</li>
-                          <li className="headerSedenavLi">Hoichoi</li>
+                          <li className="headerSedenavLi">Samsung</li>
+                          <li className="headerSedenavLi">Carolina Herrera</li>
+                          <li className="headerSedenavLi">Dior</li>
+                          <li className="headerSedenavLi">Paco Rabanne</li>
+                          <li className="headerSedenavLi">Versace</li>
                         </motion.ul>
                       )}
                     </div>

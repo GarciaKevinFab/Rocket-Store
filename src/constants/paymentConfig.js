@@ -2,7 +2,7 @@ export const paymentMethods = {
   yape: {
     name: "Yape",
     number: "987 654 321",
-    holder: "Rocket Store S.A.C.",
+    holder: "Rume Import S.A.C.",
     instructions:
       "Abre tu app de Yape, escanea el QR o yapea al numero indicado con el monto exacto de tu pedido.",
     color: "#742284",
@@ -10,7 +10,7 @@ export const paymentMethods = {
   plin: {
     name: "Plin",
     number: "987 654 321",
-    holder: "Rocket Store S.A.C.",
+    holder: "Rume Import S.A.C.",
     instructions:
       "Abre tu app de Plin (Interbank, BBVA, Scotiabank), envia el pago al numero indicado.",
     color: "#00BCD4",
@@ -20,7 +20,7 @@ export const paymentMethods = {
     bank: "BCP",
     accountNumber: "191-0000000-0-00",
     cci: "00219100000000000000",
-    holder: "Rocket Store S.A.C.",
+    holder: "Rume Import S.A.C.",
     instructions:
       "Realiza la transferencia desde tu banca movil, banca por internet o en ventanilla al numero de cuenta indicado.",
     color: "#0033A0",

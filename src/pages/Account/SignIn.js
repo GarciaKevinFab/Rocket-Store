@@ -51,55 +51,53 @@ const SignIn = () => {
           <div className="w-[300px] flex items-start gap-3">
             <span className="text-green-500 mt-1"><BsCheckCircleFill /></span>
             <p className="text-base text-gray-300">
-              <span className="text-white font-semibold font-titleFont">Comienza rapido con ROCKET</span><br />
-              Registro facil, simple con pasos sencillos, ahora mismo empieza a despegar con ROCKET.
+              <span className="text-white font-semibold font-titleFont">Comienza rapido con RUME IMPORT</span><br />
+              Registro facil, simple con pasos sencillos. Empieza a comprar ahora.
             </p>
           </div>
           <div className="w-[300px] flex items-start gap-3">
             <span className="text-green-500 mt-1"><BsCheckCircleFill /></span>
             <p className="text-base text-gray-300">
-              <span className="text-white font-semibold font-titleFont">Accede a todos los servicios de ROCKET</span><br />
-              Descuentos exclusivos para miembros, accesorios exclusivos, ofertas de temporada unicas.
+              <span className="text-white font-semibold font-titleFont">Accede a todos los servicios de RUME IMPORT</span><br />
+              Descuentos exclusivos para miembros, productos importados, ofertas unicas.
             </p>
           </div>
           <div className="w-[300px] flex items-start gap-3">
             <span className="text-green-500 mt-1"><BsCheckCircleFill /></span>
             <p className="text-base text-gray-300">
               <span className="text-white font-semibold font-titleFont">Nuestros clientes confian en nosotros</span><br />
-              Lideres en las ventas online. Gracias por tu preferencia.
+              Productos 100% originales. Gracias por tu preferencia.
             </p>
           </div>
           <div className="flex items-center justify-between mt-10">
-            <Link to="/"><p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300">&copy; ROCKET</p></Link>
+            <Link to="/"><p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300">&copy; RUME IMPORT</p></Link>
             <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300">Terminos</p>
             <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300">Privacidad</p>
             <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300">Seguridad</p>
           </div>
         </div>
       </div>
-      <div className="w-full lgl:w-1/2 h-full">
-        <form onSubmit={handleSignIn} className="w-full lgl:w-[450px] h-screen flex items-center justify-center">
-          <div className="px-6 py-4 w-full h-[90%] flex flex-col justify-center overflow-y-scroll scrollbar-thin scrollbar-thumb-primeColor">
-            <h1 className="font-titleFont underline underline-offset-4 decoration-[1px] font-semibold text-3xl mdl:text-4xl mb-4">Iniciar sesion</h1>
-            <div className="flex flex-col gap-3">
-              <div className="flex flex-col gap-.5">
-                <p className="font-titleFont text-base font-semibold text-gray-600">Correo Electronico</p>
-                <input onChange={handleEmail} value={email} className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none" type="email" placeholder="ejemplo@correo.com" />
-                {errEmail && <p className="text-sm text-red-500 font-titleFont font-semibold px-4"><span className="font-bold italic mr-1">!</span>{errEmail}</p>}
-              </div>
-              <div className="flex flex-col gap-.5">
-                <p className="font-titleFont text-base font-semibold text-gray-600">Contrasena</p>
-                <input onChange={handlePassword} value={password} className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none" type="password" placeholder="Tu contrasena" />
-                {errPassword && <p className="text-sm text-red-500 font-titleFont font-semibold px-4"><span className="font-bold italic mr-1">!</span>{errPassword}</p>}
-              </div>
-              <button type="submit" disabled={loading} className="bg-primeColor hover:bg-black text-gray-200 hover:text-white cursor-pointer w-full text-base font-medium h-10 rounded-md duration-300 disabled:opacity-50">
-                {loading ? "Ingresando..." : "Iniciar Sesion"}
-              </button>
-              <p className="text-sm text-center font-titleFont font-medium">
-                No tienes una cuenta?{" "}
-                <Link to="/signup"><span className="hover:text-blue-600 duration-300">Registrate</span></Link>
-              </p>
+      <div className="w-full lgl:w-1/2 h-full flex items-center justify-center px-4">
+        <form onSubmit={handleSignIn} className="w-full max-w-[450px] flex flex-col justify-center">
+          <h1 className="font-titleFont underline underline-offset-4 decoration-[1px] font-semibold text-3xl mdl:text-4xl mb-4">Iniciar sesion</h1>
+          <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-.5">
+              <p className="font-titleFont text-base font-semibold text-gray-600">Correo Electronico</p>
+              <input onChange={handleEmail} value={email} className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none" type="email" placeholder="ejemplo@correo.com" />
+              {errEmail && <p className="text-sm text-red-500 font-titleFont font-semibold px-4"><span className="font-bold italic mr-1">!</span>{errEmail}</p>}
             </div>
+            <div className="flex flex-col gap-.5">
+              <p className="font-titleFont text-base font-semibold text-gray-600">Contrasena</p>
+              <input onChange={handlePassword} value={password} className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none" type="password" placeholder="Tu contrasena" />
+              {errPassword && <p className="text-sm text-red-500 font-titleFont font-semibold px-4"><span className="font-bold italic mr-1">!</span>{errPassword}</p>}
+            </div>
+            <button type="submit" disabled={loading} className="bg-primeColor hover:bg-black text-gray-200 hover:text-white cursor-pointer w-full text-base font-medium h-10 rounded-md duration-300 disabled:opacity-50">
+              {loading ? "Ingresando..." : "Iniciar Sesion"}
+            </button>
+            <p className="text-sm text-center font-titleFont font-medium">
+              No tienes una cuenta?{" "}
+              <Link to="/signup"><span className="hover:text-blue-600 duration-300">Registrate</span></Link>
+            </p>
           </div>
         </form>
       </div>

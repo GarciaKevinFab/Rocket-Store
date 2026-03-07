@@ -9,7 +9,7 @@ const FooterBottom = () => {
           <span className="text-md mr-[1px] mt-[2px] md:mt-0 text-center hidden md:inline-flex">
             <AiOutlineCopyright />
           </span>
-          Copyright 2023 | ROCKET | Todos los Derechos Reservados|
+          Copyright 2024 | RUME IMPORT | Todos los Derechos Reservados |
           <a href="https://github.com/GarciaKevinFab" target="_blank" rel="noreferrer">
             <span className="ml-1 font-medium group-hover:text-primeColor">
               Powered by K3V1N &<a href="https://github.com/jhonatanFFritz" target="_blank" rel="noreferrer">

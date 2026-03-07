@@ -52,8 +52,8 @@ const AdminOrderDetail = () => {
       <button onClick={() => navigate("/admin/pedidos")} className="text-sm text-gray-500 hover:text-primeColor mb-4 block">
         &larr; Volver a Pedidos
       </button>
-      <div className="flex items-center gap-4 mb-6">
-        <h1 className="text-2xl font-titleFont font-bold">Pedido #{id.slice(-8).toUpperCase()}</h1>
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-6">
+        <h1 className="text-xl sm:text-2xl font-titleFont font-bold">Pedido #{id.slice(-8).toUpperCase()}</h1>
         <span className={`px-3 py-1 rounded-full text-sm font-medium ${orderStatuses[order.status]?.color || "bg-gray-100"}`}>
           {orderStatuses[order.status]?.label || order.status}
         </span>

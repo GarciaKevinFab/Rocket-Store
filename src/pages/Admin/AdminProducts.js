@@ -32,9 +32,9 @@ const AdminProducts = () => {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-3">
         <h1 className="text-2xl font-titleFont font-bold">Productos</h1>
-        <Link to="/admin/productos/nuevo" className="bg-primeColor text-white px-6 py-2 rounded-md hover:bg-black duration-300 text-sm font-medium">
+        <Link to="/admin/productos/nuevo" className="bg-primeColor text-white px-6 py-2 rounded-md hover:bg-black duration-300 text-sm font-medium whitespace-nowrap">
           + Nuevo Producto
         </Link>
       </div>
@@ -49,8 +49,8 @@ const AdminProducts = () => {
       {loading ? (
         <p className="text-gray-500">Cargando productos...</p>
       ) : (
-        <div className="bg-white rounded-lg shadow-md overflow-hidden">
-          <table className="w-full text-sm">
+        <div className="bg-white rounded-lg shadow-md overflow-x-auto">
+          <table className="w-full text-sm min-w-[700px]">
             <thead className="bg-gray-50">
               <tr>
                 <th className="text-left px-4 py-3 font-semibold">Imagen</th>

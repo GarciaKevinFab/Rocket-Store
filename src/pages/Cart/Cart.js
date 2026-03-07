@@ -68,8 +68,8 @@ const Cart = () => {
             </div>
             <p className="text-lg font-semibold">Actualizar Carrito</p>
           </div>
-          <div className="max-w-7xl gap-4 flex justify-end mt-4">
-            <div className="w-96 flex flex-col gap-4">
+          <div className="max-w-7xl gap-4 flex flex-col items-end mt-4">
+            <div className="w-full sm:w-96 flex flex-col gap-4">
               <h1 className="text-2xl font-semibold text-right">
                 Total del carrito de compra
               </h1>
@@ -123,7 +123,7 @@ const Cart = () => {
             </h1>
             <p className="text-sm text-center px-10 -mt-2">
               Tu carrito de compras existe para servir. Dale un propósito:
-              llénalo con libros, electrónicos, videos, etc. y hazlo feliz.
+              llenalo con perfumes, smartphones, accesorios y mas.
             </p>
             <Link to="/tienda">
               <button className="bg-primeColor rounded-md cursor-pointer hover:bg-black active:bg-gray-900 px-8 py-2 font-titleFont font-semibold text-lg text-gray-200 hover:text-white duration-300">
