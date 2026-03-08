@@ -96,7 +96,7 @@ const SignUp = () => {
       {/* Left Side */}
       <div className="w-full lgl:w-1/2 hidden lgl:inline-flex h-screen text-white">
         <div className="w-full max-w-[450px] h-full bg-gradient-to-b from-primeColor to-gray-800 px-10 flex flex-col gap-6 justify-center">
-          <Link to="/"><img src={logo} alt="logoImg" className="w-28" /></Link>
+          <Link to="/"><img src={logo} alt="logoImg" className="w-44 brightness-0 invert" /></Link>
           <div className="flex flex-col gap-1 -mt-1">
             <h1 className="font-titleFont text-xl font-medium">Crea tu cuenta gratis</h1>
             <p className="text-sm text-gray-300">Acceso completo a RUME IMPORT</p>
