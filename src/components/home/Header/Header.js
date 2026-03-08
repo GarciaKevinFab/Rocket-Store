@@ -31,10 +31,8 @@ const Header = () => {
     <div className="w-full h-20 bg-white sticky top-0 z-50 border-b border-gray-100 shadow-sm">
       <nav className="h-full px-4 max-w-container mx-auto relative">
         <Flex className="flex items-center justify-between h-full">
-          <Link to="/">
-            <div>
-              <Image className="w-44 max-h-16 object-contain" imgSrc={logo} />
-            </div>
+          <Link to="/" className="flex-shrink-0">
+            <img src={logo} alt="RUME IMPORT" className="h-14 w-auto object-contain" />
           </Link>
           <div>
             {showMenu && (
@@ -76,7 +74,7 @@ const Header = () => {
                 >
                   <div className="w-full h-full bg-gradient-to-b from-primeColor to-gray-800 p-6 overflow-y-auto">
                     <img
-                      className="w-40 mb-6 brightness-0 invert"
+                      className="w-44 mb-6 brightness-0 invert"
                       src={logo}
                       alt="logo"
                     />
