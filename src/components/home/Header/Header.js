@@ -4,7 +4,6 @@ import { MdClose } from "react-icons/md";
 import { HiMenuAlt2 } from "react-icons/hi";
 import { motion } from "framer-motion";
 import { logo } from "../../../assets/images";
-import Image from "../../designLayouts/Image";
 import { navBarList } from "../../../constants";
 import Flex from "../../designLayouts/Flex";
 
@@ -31,8 +30,8 @@ const Header = () => {
     <div className="w-full h-20 bg-white sticky top-0 z-50 border-b border-gray-100 shadow-sm">
       <nav className="h-full px-4 max-w-container mx-auto relative">
         <Flex className="flex items-center justify-between h-full">
-          <Link to="/" className="flex-shrink-0">
-            <img src={logo} alt="RUME IMPORT" className="h-14 w-auto object-contain" />
+          <Link to="/" className="flex-shrink-0 ml-1">
+            <img src={logo} alt="RUME IMPORT" className="h-12 w-auto object-contain" />
           </Link>
           <div>
             {showMenu && (
