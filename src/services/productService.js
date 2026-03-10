@@ -78,18 +78,23 @@ export const getProductsBySection = async (section) => {
   return snapshot.docs.map((d) => ({ _id: d.id, id: d.id, ...d.data() }));
 };
 
-export const createProduct = async (data, imageFile) => {
-  let imageUrl = data.img || "";
+const uploadImage = async (file) => {
+  const storageRef = ref(storage, `products/${Date.now()}_${file.name}`);
+  await uploadBytes(storageRef, file);
+  return getDownloadURL(storageRef);
+};
 
-  if (imageFile) {
-    const storageRef = ref(storage, `products/${Date.now()}_${imageFile.name}`);
-    await uploadBytes(storageRef, imageFile);
-    imageUrl = await getDownloadURL(storageRef);
+export const createProduct = async (data, imageFiles = []) => {
+  const imageUrls = [];
+  for (const file of imageFiles) {
+    const url = await uploadImage(file);
+    imageUrls.push(url);
   }
 
   const docRef = await addDoc(collection(db, "products"), {
     ...data,
-    img: imageUrl,
+    images: imageUrls,
+    img: imageUrls[0] || "",
     active: true,
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp(),
@@ -97,14 +102,20 @@ export const createProduct = async (data, imageFile) => {
   return docRef.id;
 };
 
-export const updateProduct = async (id, data, imageFile) => {
-  const updateData = { ...data, updatedAt: serverTimestamp() };
-
-  if (imageFile) {
-    const storageRef = ref(storage, `products/${Date.now()}_${imageFile.name}`);
-    await uploadBytes(storageRef, imageFile);
-    updateData.img = await getDownloadURL(storageRef);
+export const updateProduct = async (id, data, newImageFiles = [], existingImages = []) => {
+  const newUrls = [];
+  for (const file of newImageFiles) {
+    const url = await uploadImage(file);
+    newUrls.push(url);
   }
+
+  const allImages = [...existingImages, ...newUrls];
+  const updateData = {
+    ...data,
+    images: allImages,
+    img: allImages[0] || "",
+    updatedAt: serverTimestamp(),
+  };
 
   await updateDoc(doc(db, "products", id), updateData);
 };

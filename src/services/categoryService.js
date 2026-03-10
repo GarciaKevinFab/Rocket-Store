@@ -20,13 +20,11 @@ export const getAllCategories = async () => {
 };
 
 export const getActiveCategories = async () => {
-  const q = query(
-    collection(db, "categories"),
-    where("active", "==", true),
-    orderBy("order", "asc")
-  );
+  const q = query(collection(db, "categories"), orderBy("order", "asc"));
   const snapshot = await getDocs(q);
-  return snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
+  return snapshot.docs
+    .map((d) => ({ id: d.id, ...d.data() }))
+    .filter((cat) => cat.active !== false);
 };
 
 export const createCategory = async (data) => {
