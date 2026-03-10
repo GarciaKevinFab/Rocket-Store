@@ -18,18 +18,7 @@ import {
 } from "firebase/storage";
 
 export const getProducts = async (filters = {}) => {
-  const constraints = [where("active", "==", true)];
-
-  if (filters.category) {
-    constraints.push(where("category", "==", filters.category));
-  }
-  if (filters.brand) {
-    constraints.push(where("brand", "==", filters.brand));
-  }
-
-  constraints.push(orderBy("createdAt", "desc"));
-
-  const q = query(collection(db, "products"), ...constraints);
+  const q = query(collection(db, "products"), orderBy("createdAt", "desc"));
   const snapshot = await getDocs(q);
   let products = snapshot.docs.map((d) => ({
     _id: d.id,
@@ -37,6 +26,15 @@ export const getProducts = async (filters = {}) => {
     ...d.data(),
   }));
 
+  // Client-side filtering (avoids needing Firestore composite indexes)
+  products = products.filter((p) => p.active !== false);
+
+  if (filters.category) {
+    products = products.filter((p) => p.category === filters.category);
+  }
+  if (filters.brand) {
+    products = products.filter((p) => p.brand === filters.brand);
+  }
   if (filters.priceMin !== undefined && filters.priceMin !== null) {
     products = products.filter((p) => Number(p.price) >= filters.priceMin);
   }
@@ -45,7 +43,7 @@ export const getProducts = async (filters = {}) => {
   }
   if (filters.color) {
     products = products.filter((p) =>
-      p.color.toLowerCase().includes(filters.color.toLowerCase())
+      p.color && p.color.toLowerCase().includes(filters.color.toLowerCase())
     );
   }
   if (filters.search) {
@@ -68,14 +66,11 @@ export const getProductById = async (id) => {
 };
 
 export const getProductsBySection = async (section) => {
-  const q = query(
-    collection(db, "products"),
-    where("active", "==", true),
-    where("section", "==", section),
-    orderBy("createdAt", "desc")
-  );
+  const q = query(collection(db, "products"), orderBy("createdAt", "desc"));
   const snapshot = await getDocs(q);
-  return snapshot.docs.map((d) => ({ _id: d.id, id: d.id, ...d.data() }));
+  return snapshot.docs
+    .map((d) => ({ _id: d.id, id: d.id, ...d.data() }))
+    .filter((p) => p.active !== false && p.section === section);
 };
 
 const uploadImage = async (file) => {
