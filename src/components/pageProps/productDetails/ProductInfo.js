@@ -15,10 +15,12 @@ const ProductInfo = ({ productInfo }) => {
         <span className="text-xs text-gray-400 ml-2">Se el primero en opinar</span>
       </div>
       <p className="text-sm text-gray-600 leading-relaxed">{productInfo.des}</p>
-      <div className="flex items-center gap-2">
-        <span className="text-sm font-semibold text-gray-700">Color:</span>
-        <span className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">{productInfo.color}</span>
-      </div>
+      {productInfo.color && (
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-semibold text-gray-700">Color:</span>
+          <span className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">{productInfo.color}</span>
+        </div>
+      )}
       <div className="flex items-center gap-2 text-green-600 bg-green-50 px-4 py-2 rounded-lg">
         <MdLocalShipping className="text-lg" />
         <span className="text-sm font-medium">Envio disponible a todo el Peru</span>

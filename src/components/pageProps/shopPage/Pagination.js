@@ -22,6 +22,11 @@ function GridItems({ currentItems }) {
               color={item.color}
               badge={item.badge}
               des={item.des}
+              brand={item.brand}
+              category={item.category}
+              images={item.images}
+              videoUrl={item.videoUrl}
+              section={item.section}
             />
           </div>
         ))}

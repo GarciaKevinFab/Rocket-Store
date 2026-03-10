@@ -14,21 +14,19 @@ const Product = (props) => {
   const productItem = props;
   const handleProductDetails = () => {
     navigate(`/product/${props._id}`, {
-      state: {
-        item: productItem,
-      },
+      state: { item: productItem },
     });
   };
   return (
-    <div className="w-full relative group">
-      <div className="max-w-80 max-h-80 relative overflow-y-hidden rounded-xl">
-        <div onClick={handleProductDetails} className="cursor-pointer">
-          <Image className="w-full h-full object-cover" imgSrc={props.img} />
+    <div className="w-full relative group bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-lg duration-300">
+      <div className="w-full aspect-square relative overflow-hidden">
+        <div onClick={handleProductDetails} className="cursor-pointer w-full h-full">
+          <Image className="w-full h-full object-cover group-hover:scale-105 duration-500" imgSrc={props.img} />
         </div>
-        <div className="absolute top-4 left-4">
+        <div className="absolute top-3 left-3">
           {props.badge && <Badge text="Nuevo" />}
         </div>
-        <div className="w-full h-auto absolute bg-white/95 backdrop-blur-sm -bottom-[130px] group-hover:bottom-0 duration-500 rounded-b-xl">
+        <div className="w-full h-auto absolute bg-white/95 backdrop-blur-sm -bottom-[130px] group-hover:bottom-0 duration-500">
           <ul className="w-full h-full flex flex-col items-end justify-center gap-1 font-titleFont px-3 py-3">
             <li
               onClick={() =>
@@ -47,38 +45,32 @@ const Product = (props) => {
               className="text-gray-600 hover:text-white hover:bg-primeColor text-sm font-normal flex items-center justify-end gap-2 hover:cursor-pointer px-3 py-2 rounded-lg duration-300 w-full"
             >
               Agregar al carrito
-              <span>
-                <FaShoppingCart />
-              </span>
+              <FaShoppingCart />
             </li>
             <li
               onClick={handleProductDetails}
               className="text-gray-600 hover:text-white hover:bg-primeColor text-sm font-normal flex items-center justify-end gap-2 hover:cursor-pointer px-3 py-2 rounded-lg duration-300 w-full"
             >
               Ver detalles
-              <span className="text-lg">
-                <MdOutlineLabelImportant />
-              </span>
+              <MdOutlineLabelImportant className="text-lg" />
             </li>
             <li className="text-gray-600 hover:text-white hover:bg-primeColor text-sm font-normal flex items-center justify-end gap-2 hover:cursor-pointer px-3 py-2 rounded-lg duration-300 w-full">
               Agregar a favoritos
-              <span>
-                <BsSuitHeartFill />
-              </span>
+              <BsSuitHeartFill />
             </li>
           </ul>
         </div>
       </div>
-      <div className="max-w-80 py-4 flex flex-col gap-1 px-2">
+      <div className="p-4 flex flex-col gap-1">
         <div className="flex items-center justify-between font-titleFont">
-          <h2 className="text-base text-primeColor font-bold truncate pr-2">
+          <h2 className="text-sm font-bold text-primeColor truncate pr-2">
             {props.productName}
           </h2>
-          <p className="text-primeColor font-bold text-base whitespace-nowrap">S/.{props.price}</p>
+          <p className="text-primeColor font-bold text-sm whitespace-nowrap">S/.{Number(props.price).toFixed(2)}</p>
         </div>
-        <div>
-          <p className="text-gray-400 text-[13px]">{props.color}</p>
-        </div>
+        {props.brand && (
+          <p className="text-gray-400 text-xs">{props.brand}</p>
+        )}
       </div>
     </div>
   );

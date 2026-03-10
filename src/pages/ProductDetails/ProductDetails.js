@@ -8,7 +8,7 @@ import { MdPlayCircle } from "react-icons/md";
 
 const getYoutubeId = (url) => {
   if (!url) return null;
-  const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&?\s]+)/);
+  const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|shorts\/|watch\?v=|watch\?.+&v=))([^&?\s]+)/);
   return match ? match[1] : null;
 };
 
@@ -24,24 +24,24 @@ const ProductDetails = () => {
   useEffect(() => {
     const loadProduct = async () => {
       setLoading(true);
+      // Show state data immediately for fast render
       if (location.state?.item) {
         setProductInfo(location.state.item);
-        setLoading(false);
-      } else {
-        try {
-          const product = await getProductById(_id);
-          if (product) setProductInfo(product);
-        } catch (e) {
-          console.error("Error loading product:", e);
-        }
-        setLoading(false);
       }
+      // Always fetch from Firestore for full data (images[], videoUrl)
+      try {
+        const product = await getProductById(_id);
+        if (product) setProductInfo(product);
+      } catch (e) {
+        console.error("Error loading product:", e);
+      }
+      setLoading(false);
       setPrevLocation(location.pathname);
     };
     loadProduct();
     setSelectedImage(0);
     setShowVideo(false);
-  }, [location, _id]);
+  }, [_id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (loading || !productInfo) {
     return (
